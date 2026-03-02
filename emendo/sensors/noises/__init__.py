@@ -1,13 +1,13 @@
 # API
-from .noise import Noise
+from ._noise import Noise
 
-from .white import WhiteNoise
-from .brown import BrownNoise
-from .pink import PinkNoise
-from .blue import BlueNoise
-from .violet import VioletNoise
+from ._white import WhiteNoise
+from ._brown import BrownNoise
+from ._pink import PinkNoise
+from ._blue import BlueNoise
+from ._violet import VioletNoise
 
-from .composite import CompositeNoise
+from ._composite import CompositeNoise
 
 # Export
 __all__ = [

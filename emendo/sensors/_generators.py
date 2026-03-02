@@ -10,9 +10,7 @@ class Generator():
     def __init__(self):
         pass
     
-    def gt(self, freq: float, duration: float):
-        
-        
+    def gt(self, start: float, freq: float, duration: float):
         # Get position
         # Get velocity
         # Get acceleration

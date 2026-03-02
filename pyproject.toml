@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emendo"
+version = "0.0.1"
+description = "Short description"
+authors = [{name = "Nicholas Kania"}]
+dependencies = [
+    "numpy>=2.4",
+    "scipy>=1.17",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+docs = [
+    "sphinx",
+]

@@ -1,4 +1,7 @@
 # API
+from . import sensors
 
 # Export
-__all__ = []
+__all__ = [
+    'sensors'
+]
