@@ -1,6 +1,6 @@
 # Imports
 from .generators import Generator
-from .noise import Noise
+from .noises import Noise
 
 # Implementation
 class Sensors():
