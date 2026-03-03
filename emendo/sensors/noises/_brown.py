@@ -1,13 +1,13 @@
 # Imports
-import numpy as np
 from ._noise import Noise
+from typing import Optional
+import numpy as np
 
 # Implementation
 class BrownNoise(Noise):
-    def __init__(self, fs: float, seed: int):
-        super().__init__(fs, seed)
-        
-        self.C = 1.0
+    """Brown noise generator"""
+    def __init__(self, fs: float, scale: float = 1.0, seed: Optional[int] = None):
+        super().__init__(fs=fs, scale=scale, seed=seed)
     
     
     
@@ -21,10 +21,10 @@ class BrownNoise(Noise):
         positive_freqs = freqs[1:half]
 
         # Random phases
-        phases = self.rng_generator.uniform(0, 2*np.pi, half - 1)
+        phases = self._rng.uniform(0, 2*np.pi, half - 1)
 
         # 1/f magnitude scaling  (Brown noise -> 1/f amplitude)
-        magnitude = self.C / np.abs(positive_freqs)
+        magnitude = 1.0 / np.abs(positive_freqs)
 
         X[1:half] = magnitude * np.exp(1j * phases)
 
@@ -40,6 +40,8 @@ class BrownNoise(Noise):
         
         # IFFT to create noise signal
         noise_signal = np.fft.ifft(X).real
+        scaling = self.scale / np.std(noise_signal)
+        noise_signal *= scaling
         
         # Return noise signal
         return noise_signal

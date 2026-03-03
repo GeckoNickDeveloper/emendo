@@ -1,13 +1,13 @@
 # Imports
-import numpy as np
 from ._noise import Noise
+from typing import Optional
+import numpy as np
 
 # Implementation
 class VioletNoise(Noise):
-    def __init__(self, fs: float, seed: int):
-        super().__init__(fs, seed)
-        
-        self.C = 1.0
+    """Violet noise generator"""
+    def __init__(self, fs: float, scale: float = 1.0, seed: Optional[int] = None):
+        super().__init__(fs=fs, scale=scale, seed=seed)
     
     
     
@@ -20,10 +20,10 @@ class VioletNoise(Noise):
         positive_freqs = np.abs(freqs[1:half])
 
         # Random phases
-        phases = self.rng_generator.uniform(0, 2.0 * np.pi, half - 1)
+        phases = self._rng.uniform(0, 2.0 * np.pi, half - 1)
 
         # Violet noise amplitude scaling: f
-        magnitude = self.C * positive_freqs
+        magnitude = positive_freqs
 
         X[1:half] = magnitude * np.exp(1j * phases)
 
@@ -37,6 +37,8 @@ class VioletNoise(Noise):
     
         # IFFT to create noise signal
         noise_signal = np.fft.ifft(X).real
+        scaling = self.scale / np.std(noise_signal)
+        noise_signal *= scaling
         
         # Return noise signal
         return noise_signal
