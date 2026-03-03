@@ -1,7 +1,7 @@
 # API
-from .color import Color
-from .logger import Logger
-from .progress_bar import ProgressBar
+from ._color import Color
+from ._logger import Logger
+from ._progress_bar import ProgressBar
 
 # Export
 __all__ = [

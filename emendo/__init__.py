@@ -1,7 +1,12 @@
 # API
+from . import noises
 from . import sensors
+from . import utils
 
 # Export
 __all__ = [
-    'sensors'
+    # Sub-modules
+    'noises',
+    'sensors',
+    'utils',
 ]
