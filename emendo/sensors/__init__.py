@@ -1,10 +1,12 @@
 # API
-from ._generators import Generator
+from . import generators
 from ._sensors import Sensors
 
 # Export
-__all__ = [    
+__all__ = [
+    # Submodules
+    'generators',
+    
     # Classes
-    'Generator',
     'Sensors',
 ]

@@ -1,5 +1,5 @@
 # Imports
-from ._generators import Generator
+from .generators._generator import Generator
 from ..noises import Noise
 
 # Implementation
