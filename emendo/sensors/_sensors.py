@@ -1,5 +1,5 @@
 # Imports
-from .generators._generator import Generator
+from .generators import Generator
 from ..noises import Noise
 
 # Implementation
@@ -12,7 +12,7 @@ class Sensors():
         self.aliasing = aliasing
     
     # Obtain measurements data
-    def measurements(self):        
+    def measurements(self):
         # Get true accelerometer (10x oversample)
         # Get true orientation (10x oversample)
         # Get true magnetometer (10x oversample)

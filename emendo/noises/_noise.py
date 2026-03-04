@@ -2,6 +2,8 @@
 from typing import Optional
 import numpy as np
 
+
+
 # Implementation
 class Noise:
     """Base class for all noise types"""

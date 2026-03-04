@@ -1,7 +1,10 @@
 # Imports
-from ._noise import Noise
+from . import Noise
+
 from typing import Optional
 import numpy as np
+
+
 
 # Implementation
 class BrownNoise(Noise):

@@ -1,7 +1,10 @@
 # Imports
-from ._noise import Noise
+from . import Noise
+
 from typing import Optional, List
 import numpy as np
+
+
 
 # Implementation
 class CompositeNoise(Noise):
