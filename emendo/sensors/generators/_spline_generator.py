@@ -1,6 +1,6 @@
 # Imports
 from . import GeneratorConfig
-from . import BaseGenerator
+from . import Generator
 
 from scipy.interpolate import BSpline
 from scipy.spatial.transform import RotationSpline
@@ -11,14 +11,22 @@ import numpy as np
 
 
 # Implementations
-class SplineGenerator(BaseGenerator):
+class SplineGenerator(Generator):
     '''
     SplineGenerator for emendo sensors simulation
 
     Based on splines
     '''
     def __init__(self, config: GeneratorConfig):
-        pass
+        super().__init__(config)
+        
+        # Create trajectory interpolations
+        # Find min/max
+        # Raise error out-of-bounds if hard boundaries reached
+        
+        # Interpolate attitude
+        
+        # Interpolate megnatic field
     
 
 
