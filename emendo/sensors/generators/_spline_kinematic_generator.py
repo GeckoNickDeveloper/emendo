@@ -2,6 +2,8 @@
 from . import GeneratorConfig
 from . import KinematicGenerator
 
+from typing import List, Tuple
+
 import scipy as sp
 import numpy as np
 
@@ -23,7 +25,7 @@ class SplineKinematicGenerator(KinematicGenerator):
         self.__acceleration: sp.interpolate.BSpline
         
         # Attributes
-        self.__limits: tuple[float, float]
+        self.__limits: List[Tuple[float, float]]
         
         # Initialization
         self.__interpolate()
