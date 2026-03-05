@@ -23,12 +23,7 @@ class KinematicGenerator(BaseGenerator):
         # Create trajectory interpolations
         # Find min/max
         # Raise error out-of-bounds if hard boundaries reached
-    
-    def limits(self):
-        '''
-        Returns the kinematic zone limits
-        '''
-        raise NotImplementedError('Subclasses must implement `limits` method')
+
 
     def position(self, start: float, freq: float, duration: float):
         raise NotImplementedError('Subclasses must implement `position` method')

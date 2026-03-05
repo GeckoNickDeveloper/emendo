@@ -5,7 +5,7 @@ from ._progress_bar import ProgressBar
 
 # Export
 __all__ = [
-    # Logging
+    # Classes
     'Color',
     'Logger',
     'ProgressBar',
