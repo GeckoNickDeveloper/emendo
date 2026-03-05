@@ -1,10 +1,10 @@
 # API
-from . import logs
+from . import estimators
 
 # Export
 __all__ = [
     # Sub-modules
-    'logs',
+    'estimators',
     
     # Classes
 ]

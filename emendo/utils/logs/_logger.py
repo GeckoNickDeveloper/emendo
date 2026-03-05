@@ -1,7 +1,7 @@
 # Imports
 from datetime import datetime
 from enum import Enum, auto
-from .color import Color
+from . import Color
 
 
 

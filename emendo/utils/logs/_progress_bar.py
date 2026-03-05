@@ -1,5 +1,5 @@
 # Imports
-from .color import Color
+from . import Color
 import os
 
 
