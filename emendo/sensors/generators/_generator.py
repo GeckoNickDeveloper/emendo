@@ -4,11 +4,18 @@ from . import GeneratorConfig
 # Implementations
 class Generator():
     '''
-    Generator interface for emendo sensor simulation
+    Generator API for emendo sensor simulation
     '''
 
     def __init__(self, config: GeneratorConfig):
         self.config = config
+        
+        # Selector for KinematicGenerator
+        # self.kinematic
+        # Selector for AttitudeGenerator
+        # self.attitude
+        # Selector for MagneticGenerator
+        # self.magnetic
     
 
     

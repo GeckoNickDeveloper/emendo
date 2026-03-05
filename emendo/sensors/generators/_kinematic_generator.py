@@ -1,6 +1,6 @@
 # Imports
 from . import GeneratorConfig
-from . import Generator
+from . import BaseGenerator
 
 from scipy.interpolate import BSpline
 from scipy.spatial.transform import RotationSpline
@@ -11,7 +11,7 @@ import numpy as np
 
 
 # Implementations
-class SplineGenerator(Generator):
+class KinematicGenerator(BaseGenerator):
     '''
     SplineGenerator for emendo sensors simulation
 
@@ -23,12 +23,12 @@ class SplineGenerator(Generator):
         # Create trajectory interpolations
         # Find min/max
         # Raise error out-of-bounds if hard boundaries reached
-        
-        # Interpolate attitude
-        
-        # Interpolate megnatic field
     
-
+    def limits(self):
+        '''
+        Returns the kinematic zone limits
+        '''
+        raise NotImplementedError('Subclasses must implement `limits` method')
 
     def position(self, start: float, freq: float, duration: float):
         raise NotImplementedError('Subclasses must implement `position` method')
@@ -38,9 +38,3 @@ class SplineGenerator(Generator):
     
     def acceleration(self, start: float, freq: float, duration: float):
         raise NotImplementedError('Subclasses must implement `acceleration` method')
-    
-    def attitude(self, start: float, freq: float, duration: float):
-        raise NotImplementedError('Subclasses must implement `attitude` method')
-    
-    def magnetic(self, start: float, freq: float, duration: float):
-        raise NotImplementedError('Subclasses must implement `magnetic` method')

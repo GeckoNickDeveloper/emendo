@@ -1,8 +1,17 @@
 # API
+## Config
 from ._generator_config import GeneratorConfig
-
+## Proxy
 from ._generator import Generator
-from ._spline_generator import SplineGenerator
+## Interfaces
+from ._base_generator import BaseGenerator
+from ._kinematic_generator import KinematicGenerator
+from ._attitude_generator import AttitudeGenerator
+from ._magnetic_generator import MagneticGenerator
+## Implementations
+from ._spline_kinematic_generator import SplineKinematicGenerator
+
+
 
 # Export
 __all__ = [
@@ -10,7 +19,16 @@ __all__ = [
     ## Config
     'GeneratorConfig',
     
-    ## Generators
+    ## Proxy
     'Generator',
-    'SplineGenerator',
+    
+    ## Generators
+    ### Interfaces
+    'BaseGenerator',
+    'KinematicGenerator',
+    'AttitudeGenerator',
+    'MagneticGenerator',
+    
+    ### Implementations
+    'SplineKinematicGenerator'
 ]
