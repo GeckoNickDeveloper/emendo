@@ -45,12 +45,30 @@ class SplineKinematicGenerator(KinematicGenerator):
     def __validate(self):
         # Optimize Splines & Boundary checking
         ## Position
-        pos_x_min = sp.optimize.minimize_scalar(lambda t: self.__trajectory(t)[0], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_x_max = sp.optimize.minimize_scalar(lambda t: -self.__trajectory(t)[0], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_y_min = sp.optimize.minimize_scalar(lambda t: self.__trajectory(t)[1], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_y_max = sp.optimize.minimize_scalar(lambda t: -self.__trajectory(t)[1], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_z_min = sp.optimize.minimize_scalar(lambda t: self.__trajectory(t)[2], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_z_max = sp.optimize.minimize_scalar(lambda t: -self.__trajectory(t)[2], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
+        pos_x_min = sp.optimize.minimize_scalar(
+            lambda t: self.__trajectory(t)[0],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        pos_x_max = sp.optimize.minimize_scalar(
+            lambda t: -self.__trajectory(t)[0],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        pos_y_min = sp.optimize.minimize_scalar(
+            lambda t: self.__trajectory(t)[1],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        pos_y_max = sp.optimize.minimize_scalar(
+            lambda t: -self.__trajectory(t)[1],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        pos_z_min = sp.optimize.minimize_scalar(
+            lambda t: self.__trajectory(t)[2],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        pos_z_max = sp.optimize.minimize_scalar(
+            lambda t: -self.__trajectory(t)[2],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
         
         ### Check successes
         if not (
@@ -73,9 +91,18 @@ class SplineKinematicGenerator(KinematicGenerator):
 
         
         ## Velocity
-        vel_x_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__velocity(t)[0]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        vel_y_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__velocity(t)[1]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        vel_z_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__velocity(t)[2]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
+        vel_x_max = sp.optimize.minimize_scalar(
+            lambda t: -np.abs(self.__velocity(t)[0]),
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        vel_y_max = sp.optimize.minimize_scalar(
+            lambda t: -np.abs(self.__velocity(t)[1]),
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        vel_z_max = sp.optimize.minimize_scalar(
+            lambda t: -np.abs(self.__velocity(t)[2]),
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
         
         ### Check successes
         if not (vel_x_max.success and vel_y_max.success and vel_z_max.success):
@@ -90,9 +117,18 @@ class SplineKinematicGenerator(KinematicGenerator):
 
 
         ## Acceleration
-        acc_x_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__acceleration(t)[0]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        acc_y_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__acceleration(t)[1]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        acc_z_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__acceleration(t)[2]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
+        acc_x_max = sp.optimize.minimize_scalar(
+            lambda t: -np.abs(self.__acceleration(t)[0]),
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        acc_y_max = sp.optimize.minimize_scalar(
+            lambda t: -np.abs(self.__acceleration(t)[1]),
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
+        acc_z_max = sp.optimize.minimize_scalar(
+            lambda t: -np.abs(self.__acceleration(t)[2]),
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded")
         
         ### Check successes
         if not (acc_x_max.success and acc_y_max.success and acc_z_max.success):

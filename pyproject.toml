@@ -12,11 +12,13 @@ dependencies = [
     "scipy>=1.17",
 ]
 
-
 [project.optional-dependencies]
 dev = [
     "pytest",
 ]
 docs = [
     "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-autodoc-typehints",
+    "myst-parser"
 ]
