@@ -2,8 +2,6 @@
 from . import GeneratorConfig
 from . import KinematicGenerator
 
-from typing import List, Tuple
-
 import scipy as sp
 import numpy as np
 
