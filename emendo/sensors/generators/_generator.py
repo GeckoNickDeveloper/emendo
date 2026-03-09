@@ -1,6 +1,8 @@
 # Imports
 from . import GeneratorConfig
 
+import numpy as np
+
 # Implementations
 class Generator():
     '''
@@ -31,5 +33,5 @@ class Generator():
     def attitude(self, start: float, freq: float, duration: float):
         raise NotImplementedError('Subclasses must implement `attitude` method')
     
-    def magnetic(self, start: float, freq: float, duration: float):
+    def magnetic(self, position: np.ndarray):
         raise NotImplementedError('Subclasses must implement `magnetic` method')

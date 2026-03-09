@@ -10,6 +10,7 @@ authors = [{name = "Nicholas Kania"}]
 dependencies = [
     "numpy>=2.4",
     "scipy>=1.17",
+    "pygeomag",
 ]
 
 

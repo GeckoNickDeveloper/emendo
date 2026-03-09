@@ -10,6 +10,7 @@ from ._attitude_generator import AttitudeGenerator
 from ._magnetic_generator import MagneticGenerator
 ## Implementations
 from ._spline_kinematic_generator import SplineKinematicGenerator
+from ._regular_grid_magnetic_generator import RegularGridMagneticGenerator
 
 
 
@@ -30,5 +31,6 @@ __all__ = [
     'MagneticGenerator',
     
     ### Implementations
-    'SplineKinematicGenerator'
+    'SplineKinematicGenerator',
+    'RegularGridMagneticGenerator',
 ]
