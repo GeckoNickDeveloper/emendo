@@ -1,30 +1,26 @@
 # Imports
-from . import BaseNoise
-
-from typing import Optional
+from . import Noise, NoiseConfig
 import numpy as np
 
-
-
 # Implementation
-class BrownNoise(BaseNoise):
+class BrownNoise(Noise):
     """Brown noise generator"""
-    def __init__(self, fs: float, scale: float = 1.0, seed: Optional[int] = None):
-        super().__init__(fs=fs, scale=scale, seed=seed)
+    def __init__(self, cfg: NoiseConfig):
+        super().__init__(cfg)
     
     
     
-    def generate(self, samples: int):
+    def generate(self, N: int):
         # Frequency-domain array (complex)
-        X = np.zeros(samples, dtype=complex)
-        half = samples // 2
+        X = np.zeros(N, dtype=complex)
+        half = N // 2
 
         # Frequency vector (positive freqs only, excluding DC)
-        freqs = np.fft.fftfreq(samples, d = self.dt)
+        freqs = np.fft.fftfreq(N, d = 1.0 / self.cfg.freq)
         positive_freqs = freqs[1:half]
 
         # Random phases
-        phases = self._rng.uniform(0, 2*np.pi, half - 1)
+        phases = self.rng.uniform(0, 2*np.pi, half - 1)
 
         # 1/f magnitude scaling  (Brown noise -> 1/f amplitude)
         magnitude = 1.0 / np.abs(positive_freqs)
@@ -43,7 +39,7 @@ class BrownNoise(BaseNoise):
         
         # IFFT to create noise signal
         noise_signal = np.fft.ifft(X).real
-        scaling = self.scale / np.std(noise_signal)
+        scaling = self.cfg.scale / np.std(noise_signal)
         noise_signal *= scaling
         
         # Return noise signal

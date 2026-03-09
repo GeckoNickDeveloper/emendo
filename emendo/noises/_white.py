@@ -1,28 +1,24 @@
 # Imports
-from . import BaseNoise
-
-from typing import Optional
+from . import Noise, NoiseConfig
 import numpy as np
 
-
-
 # Implementation
-class WhiteNoise(BaseNoise):
+class WhiteNoise(Noise):
     """White noise generator"""
-    def __init__(self, fs: float, scale: float = 1.0, seed: Optional[int] = None):
-        super().__init__(fs=fs, scale=scale, seed=seed)
+    def __init__(self, cfg: NoiseConfig):
+        super().__init__(cfg)
     
     
     
-    def generate(self, samples: int):
+    def generate(self, N: int):
         # Noise spectrum
-        X = np.zeros(samples, dtype = complex)
+        X = np.zeros(N, dtype = complex)
 
         # Positive frequencies (excluding DC and Nyquist)
-        half = samples // 2
+        half = N // 2
 
         # Random phases
-        phases = self._rng.uniform(0, 2 * np.pi, half - 1)
+        phases = self.rng.uniform(0, 2 * np.pi, half - 1)
 
         # Set positive-frequency bins
         X[1:half] = np.exp(1.0j * phases)
@@ -39,7 +35,7 @@ class WhiteNoise(BaseNoise):
         
         # IFFT to create noise signal
         noise_signal = np.fft.ifft(X).real
-        scaling = self.scale / np.std(noise_signal)
+        scaling = self.cfg.scale / np.std(noise_signal)
         noise_signal *= scaling
         
         # Return noise signal

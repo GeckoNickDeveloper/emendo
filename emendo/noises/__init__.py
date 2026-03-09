@@ -2,38 +2,34 @@
 ## Config
 from ._noise_config import NoiseConfig
 ## Proxy
-from ._noise_proxy import NoiseProxy
+from ._noise_factory import NoiseFactory
 ## Interfaces
-from ._base_noise import BaseNoise
+from ._noise import Noise
 ## Implementations
-from ._white import WhiteNoise
 from ._brown import BrownNoise
 from ._pink import PinkNoise
+from ._white import WhiteNoise
 from ._blue import BlueNoise
 from ._violet import VioletNoise
-from ._composite import CompositeNoise
 
 
 
 # Export
 __all__ = [
     # Modules
+    ## NO MODULES
 
     # Classes
     ## Config
     'NoiseConfig',
-
-    ## Proxy
-    'NoiseProxy',
-
+    ## Factory
+    'NoiseFactory',
     ## Interface
-    'BaseNoise',
-    
+    'Noise',
     ## Implementations
-    'WhiteNoise',
     'BrownNoise',
     'PinkNoise',
+    'WhiteNoise',
     'BlueNoise',
     'VioletNoise',
-    'CompositeNoise'
 ]
