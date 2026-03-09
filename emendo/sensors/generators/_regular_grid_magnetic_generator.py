@@ -1,9 +1,5 @@
 # Imports
-from . import GeneratorConfig
-from . import BaseGenerator
-
-from typing import List, Tuple
-
+from . import GeneratorConfig, MagneticGenerator
 from scipy.interpolate import RegularGridInterpolator
 import numpy as np
 import pygeomag as gm
@@ -11,14 +7,14 @@ import pygeomag as gm
 
 
 # Implementations
-class RegularGridMagneticGenerator(BaseGenerator):
+class RegularGridMagneticGenerator(MagneticGenerator):
     '''
     MagneticGenerator interface for emendo sensors simulation
 
     Focused on magnetic field interpolation
     '''
-    def __init__(self, config: GeneratorConfig):
-        super().__init__(config)
+    def __init__(self, cfg: GeneratorConfig):
+        super().__init__(cfg)
         
         # Attributes
         self.__anchor = self.config['data']['anchor']

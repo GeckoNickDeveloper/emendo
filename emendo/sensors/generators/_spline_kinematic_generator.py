@@ -1,13 +1,7 @@
 # Imports
-from . import GeneratorConfig
-from . import KinematicGenerator
-
-from typing import List, Tuple
-
+from . import GeneratorConfig, KinematicGenerator
 import scipy as sp
 import numpy as np
-
-
 
 # Implementations
 class SplineKinematicGenerator(KinematicGenerator):
@@ -16,8 +10,8 @@ class SplineKinematicGenerator(KinematicGenerator):
 
     Based on splines
     '''
-    def __init__(self, config: GeneratorConfig):
-        super().__init__(config)
+    def __init__(self, cfg: GeneratorConfig):
+        super().__init__(cfg)
         
         # Attributes
         self.__trajectory: sp.interpolate.BSpline
@@ -45,12 +39,36 @@ class SplineKinematicGenerator(KinematicGenerator):
     def __validate(self):
         # Optimize Splines & Boundary checking
         ## Position
-        pos_x_min = sp.optimize.minimize_scalar(lambda t: self.__trajectory(t)[0], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_x_max = sp.optimize.minimize_scalar(lambda t: -self.__trajectory(t)[0], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_y_min = sp.optimize.minimize_scalar(lambda t: self.__trajectory(t)[1], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_y_max = sp.optimize.minimize_scalar(lambda t: -self.__trajectory(t)[1], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_z_min = sp.optimize.minimize_scalar(lambda t: self.__trajectory(t)[2], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        pos_z_max = sp.optimize.minimize_scalar(lambda t: -self.__trajectory(t)[2], bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
+        pos_x_min = sp.optimize.minimize_scalar(
+            lambda t: self.__trajectory(t)[0],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded"
+        )
+        pos_x_max = sp.optimize.minimize_scalar(
+            lambda t: -self.__trajectory(t)[0],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded"
+        )
+        pos_y_min = sp.optimize.minimize_scalar(
+            lambda t: self.__trajectory(t)[1],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded"
+        )
+        pos_y_max = sp.optimize.minimize_scalar(
+            lambda t: -self.__trajectory(t)[1],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded"
+        )
+        pos_z_min = sp.optimize.minimize_scalar(
+            lambda t: self.__trajectory(t)[2],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded"
+        )
+        pos_z_max = sp.optimize.minimize_scalar(
+            lambda t: -self.__trajectory(t)[2],
+            bounds = (self.config['min-time'], self.config['max-time'],),
+            method="bounded"
+        )
         
         ### Check successes
         if not (
