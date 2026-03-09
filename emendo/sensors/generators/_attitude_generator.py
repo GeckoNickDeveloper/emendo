@@ -1,26 +1,19 @@
 # Imports
 from . import GeneratorConfig
-from . import BaseGenerator
+import numpy as np
 
 from scipy.spatial.transform import RotationSpline
 
-import numpy as np
-
-
-
 # Implementations
-class AttitudeGenerator(BaseGenerator):
+class AttitudeGenerator:
     '''
     AttitudeGenerator interface for emendo sensors simulation
 
-    Focused on attitude interpolation
+    Focused on attitude
     '''
-    def __init__(self, config: GeneratorConfig):
-        super().__init__(config)
-        
-        # Interpolate attitude
     
-
-
+    def __init__(self, cfg: GeneratorConfig):
+        self.cfg = cfg
+    
     def attitude(self, start: float, freq: float, duration: float):
-        raise NotImplementedError('Subclasses must implement `attitude` method')
+        raise NotImplementedError('Must implement `attitude` method')

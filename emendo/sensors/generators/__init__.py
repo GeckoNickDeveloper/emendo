@@ -1,10 +1,9 @@
 # API
 ## Config
-from ._generator_config import GeneratorConfig
+from ._generator_config import GeneratorConfig, GeneratorData, GeneratorBounds, GeneratorZone
 ## Proxy
-from ._generator_proxy import GeneratorProxy
+from ._generator import Generator
 ## Interfaces
-from ._base_generator import BaseGenerator
 from ._kinematic_generator import KinematicGenerator
 from ._attitude_generator import AttitudeGenerator
 from ._magnetic_generator import MagneticGenerator
@@ -18,19 +17,24 @@ from ._regular_grid_magnetic_generator import RegularGridMagneticGenerator
 __all__ = [
     # Classes
     ## Config
+    'GeneratorData',    # Sub-configuration class
+    'GeneratorBounds',  # Sub-configuration class
+    'GeneratorZone',    # Sub-configuration class
     'GeneratorConfig',
     
     ## Proxy
-    'GeneratorProxy',
+    'Generator',
     
     ## Generators
     ### Interfaces
-    'BaseGenerator',
     'KinematicGenerator',
     'AttitudeGenerator',
     'MagneticGenerator',
     
     ### Implementations
+    #### KinematicGenerator
     'SplineKinematicGenerator',
+    #### AttitudeGenerator
+    #### MagneticGenerator
     'RegularGridMagneticGenerator',
 ]

@@ -1,21 +1,19 @@
 # Imports
 from . import GeneratorConfig
-from . import BaseGenerator
-
 import numpy as np
 
 
 
 # Implementations
-class MagneticGenerator(BaseGenerator):
+class MagneticGenerator:
     '''
     MagneticGenerator interface for emendo sensors simulation
 
-    Focused on magnetic field interpolation
+    Focused on magnetic field
     '''
-    def __init__(self, config: GeneratorConfig):
-        super().__init__(config)
-        # Interpolate megnatic field
+    
+    def __init__(self, cfg: GeneratorConfig):
+        self.cfg = cfg
 
     def magnetic(self, positions: np.ndarray):
-        raise NotImplementedError('Subclasses must implement `magnetic` method')
+        raise NotImplementedError('Must implement `magnetic` method')

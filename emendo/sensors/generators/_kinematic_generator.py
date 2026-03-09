@@ -1,31 +1,22 @@
 # Imports
 from . import GeneratorConfig
-from . import BaseGenerator
-
 import numpy as np
 
-
-
 # Implementations
-class KinematicGenerator(BaseGenerator):
+class KinematicGenerator:
     '''
-    SplineGenerator for emendo sensors simulation
-
-    Based on splines
+    `KinematicGenerator` interface for emendo sensors simulation
+    
+    Focused on trajectory, velocity and acceleration
     '''
-    def __init__(self, config: GeneratorConfig):
-        super().__init__(config)
-        
-        # Create trajectory interpolations
-        # Find min/max
-        # Raise error out-of-bounds if hard boundaries reached
-
+    def __init__(self, cfg: GeneratorConfig):
+        self.cfg = cfg
 
     def position(self, start: float, freq: float, duration: float):
-        raise NotImplementedError('Subclasses must implement `position` method')
+        raise NotImplementedError('Must implement `position` method')
     
     def velocity(self, start: float, freq: float, duration: float):
-        raise NotImplementedError('Subclasses must implement `velocity` method')
+        raise NotImplementedError('Must implement `velocity` method')
     
     def acceleration(self, start: float, freq: float, duration: float):
-        raise NotImplementedError('Subclasses must implement `acceleration` method')
+        raise NotImplementedError('Must implement `acceleration` method')

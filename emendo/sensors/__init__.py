@@ -4,7 +4,7 @@ from ._sensors import Sensors
 
 # Export
 __all__ = [
-    # Submodules
+    # Modules
     'generators',
     
     # Classes
