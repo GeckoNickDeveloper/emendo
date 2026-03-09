@@ -5,7 +5,7 @@ import numpy as np
 
 
 # Implementation
-class Noise:
+class BaseNoise():
     """Base class for all noise types"""
     def __init__(
         self,

@@ -1,10 +1,10 @@
 # Imports
-from .generators import Generator
-from ..noises import Noise
+from .generators import GeneratorProxy
+from ..noises import BaseNoise
 
 # Implementation
 class Sensors():
-    def __init__(self, generator: Generator, noise: Noise, freq: float, duration: float, aliasing: bool = True):
+    def __init__(self, generator: GeneratorProxy, noise: BaseNoise, freq: float, duration: float, aliasing: bool = True):
         self.generator = generator
         self.noise = noise
         self.freq = freq
@@ -25,5 +25,4 @@ class Sensors():
         # Anti-aliasing filter (optional)
         
         # Downsample (decimation)
-        
         pass

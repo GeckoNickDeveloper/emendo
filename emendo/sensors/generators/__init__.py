@@ -2,7 +2,7 @@
 ## Config
 from ._generator_config import GeneratorConfig
 ## Proxy
-from ._generator import Generator
+from ._generator_proxy import GeneratorProxy
 ## Interfaces
 from ._base_generator import BaseGenerator
 from ._kinematic_generator import KinematicGenerator
@@ -21,7 +21,7 @@ __all__ = [
     'GeneratorConfig',
     
     ## Proxy
-    'Generator',
+    'GeneratorProxy',
     
     ## Generators
     ### Interfaces

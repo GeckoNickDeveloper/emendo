@@ -1,5 +1,5 @@
 # Imports
-from . import Noise
+from . import BaseNoise
 
 from typing import Optional
 import numpy as np
@@ -7,7 +7,7 @@ import numpy as np
 
 
 # Implementation
-class BrownNoise(Noise):
+class BrownNoise(BaseNoise):
     """Brown noise generator"""
     def __init__(self, fs: float, scale: float = 1.0, seed: Optional[int] = None):
         super().__init__(fs=fs, scale=scale, seed=seed)

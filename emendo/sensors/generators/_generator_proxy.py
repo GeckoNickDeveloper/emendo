@@ -4,7 +4,7 @@ from . import GeneratorConfig
 import numpy as np
 
 # Implementations
-class Generator():
+class GeneratorProxy():
     '''
     Generator API for emendo sensor simulation
     '''

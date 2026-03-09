@@ -1,5 +1,5 @@
 # Imports
-from . import Noise
+from . import BaseNoise
 
 from typing import Optional, List
 import numpy as np
@@ -7,11 +7,11 @@ import numpy as np
 
 
 # Implementation
-class CompositeNoise(Noise):
+class CompositeNoise(BaseNoise):
     """Composite of multiple Noise instances"""
     def __init__(
         self,
-        noises: List[Noise],
+        noises: List[BaseNoise],
         fs: Optional[float] = None,
         seed: Optional[int] = None
     ):
@@ -32,7 +32,7 @@ class CompositeNoise(Noise):
     def scale(self, scale: float):
         raise NotImplementedError("CompositeNoise does not support a single scale")
 
-    def add(self, noise: Noise):
+    def add(self, noise: BaseNoise):
         """Add a new Noise instance ensuring frequency consistency"""
         if self.fs is not None:
             noise.frequency(self.fs)
