@@ -2,10 +2,6 @@
 from . import GeneratorConfig
 from . import BaseGenerator
 
-from scipy.interpolate import BSpline
-from scipy.spatial.transform import RotationSpline
-from scipy.interpolate import RBFInterpolator
-
 import numpy as np
 
 

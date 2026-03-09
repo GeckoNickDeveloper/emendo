@@ -13,11 +13,13 @@ dependencies = [
     "pygeomag",
 ]
 
-
 [project.optional-dependencies]
 dev = [
     "pytest",
 ]
 docs = [
     "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-autodoc-typehints",
+    "myst-parser"
 ]
