@@ -77,7 +77,20 @@ class GeneratorConfig:
     bounds: GeneratorBounds = GeneratorBounds()
     data: GeneratorData     = GeneratorData()
     max_duration: float     = 600.0
+    kinematic: str          = 'default'
+    attitude: str           = 'default'
+    magnetic: str           = 'default'
     
     def __post_init__(self):
         if self.max_duration <= 0:
             raise ValueError("`max_duration` must be > 0")
+        
+        if self.kinematic not in ['default', 'spline']:
+            raise ValueError("`kinematic` value must be one of the following: `default`, `spline`")
+        
+        if self.attitude not in ['default', 'spline']:
+            raise ValueError("`attitude` value must be one of the following: `default`")
+        
+        if self.magnetic not in ['default', 'regular-grid']:
+            raise ValueError("`magnetic` value must be one of the following: `default`, `regular-grid`")
+            
