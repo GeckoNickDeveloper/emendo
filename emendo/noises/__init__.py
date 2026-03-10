@@ -6,11 +6,11 @@ from ._noise_factory import NoiseFactory
 ## Interfaces
 from ._noise import Noise
 ## Implementations
-from ._brown import BrownNoise
-from ._pink import PinkNoise
-from ._white import WhiteNoise
-from ._blue import BlueNoise
-from ._violet import VioletNoise
+from ._brown_noise import BrownNoise
+from ._pink_noise import PinkNoise
+from ._white_noise import WhiteNoise
+from ._blue_noise import BlueNoise
+from ._violet_noise import VioletNoise
 
 
 
