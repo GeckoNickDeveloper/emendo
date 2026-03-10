@@ -1,6 +1,7 @@
 # API
 from . import generators
 from ._sensors import Sensors
+from ._sensors_config import SensorsConfig
 
 # Export
 __all__ = [
@@ -8,5 +9,10 @@ __all__ = [
     'generators',
     
     # Classes
+    ## Config
+    'SensorsConfig',
+    
+    ## Implementations
     'Sensors',
+    
 ]

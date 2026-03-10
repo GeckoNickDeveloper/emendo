@@ -1,28 +1,42 @@
 # Imports
+from . import SensorsConfig
 from .generators import Generator
-from ..noises import Noise
+from ..noises import NoiseFactory
+import numpy as np
 
 # Implementation
-class Sensors():
-    def __init__(self, generator: Generator, noise: Noise, freq: float, duration: float, aliasing: bool = True):
-        self.generator = generator
-        self.noise = noise
-        self.freq = freq
-        self.duration = duration
-        self.aliasing = aliasing
+class Sensors:
+    def __init__(self, cfg: SensorsConfig):
+        self.cfg = cfg
+        
+        self.generator = Generator(cfg.generator)
+        self.noise = NoiseFactory.create(cfg.noise)
     
     # Obtain measurements data
     def measurements(self):
-        # Get true accelerometer (10x oversample)
-        # Get true orientation (10x oversample)
-        # Get true magnetometer (10x oversample)
+        # Timesteps
+        dt      = 1.0 / self.cfg.frequency
+        dt_os   = 1.0 / (self.cfg.frequency * 20)
         
-        # Get noise modeling (10x oversample)
+        t       = np.arange(0, self.cfg.max_duration + dt / 2.0, dt)
+        t_os    = np.arange(0, self.cfg.max_duration + dt_os / 2.0, dt_os)
+        
+        # Get true accelerometer (20x oversample)
+        # Get true orientation (20x oversample)
+        # Get true magnetometer (20x oversample)
+        
+        # Get noise modeling (20x oversample)
+        noise_acc_x = self.noise.generate(t.shape[0])
+        noise_acc_y = self.noise.generate(t.shape[0])
+        noise_acc_z = self.noise.generate(t.shape[0])
         
         # Rotate to body frame
         # Add noise
+        noise = self.noise.generate()
         
         # Anti-aliasing filter (optional)
+        if not self.cfg.aliasing:
+            pass
         
         # Downsample (decimation)
         pass
