@@ -29,9 +29,9 @@ class RegularGridMagneticGenerator(MagneticGenerator):
         N = 10
         
         ## Get operational X_min, X_max (longitude)
-        x = np.linspace(self.config['operation-area']['x']['min'], self.config['operation-area']['x']['max'], N) # Longitude
-        y = np.linspace(self.config['operation-area']['y']['min'], self.config['operation-area']['y']['max'], N) # Latitude
-        z = np.linspace(self.config['operation-area']['z']['min'], self.config['operation-area']['z']['max'], N) # Altitude
+        x = np.linspace(self.cfg.bounds.zone.x[0], self.cfg.bounds.zone.x[1], N)    # Longitude
+        y = np.linspace(self.cfg.bounds.zone.y[0], self.cfg.bounds.zone.y[1], N)    # Latitude
+        z = np.linspace(self.cfg.bounds.zone.z[0], self.cfg.bounds.zone.z[1], N)    # Altitude
 
         # Magnetic Grid
         ## Create magfield grid (WMM)
@@ -39,7 +39,7 @@ class RegularGridMagneticGenerator(MagneticGenerator):
 
         ## Populate grid
         geo = gm.GeoMag()
-        dec_time = gm.calculate_decimal_year(self.config['data']['date'])
+        dec_time = gm.calculate_decimal_year(self.cfg.data.date)
 
         for i in range(N):
             for j in range(N):

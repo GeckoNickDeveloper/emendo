@@ -1,7 +1,8 @@
 # Imports
 from dataclasses import dataclass
-from typing import Tuple, Optional
+from typing import Tuple
 from numpy import ndarray
+from datetime import datetime
 
 # Implementations
 @dataclass(frozen = True)
@@ -37,10 +38,11 @@ class GeneratorBounds:
 
 @dataclass(frozen = True)
 class GeneratorData:
-    anchor: Tuple[float, float, float] = (0.0, 0.0, 0.0) # (lat, lon, alt)
+    anchor: Tuple[float, float, float]  = (0.0, 0.0, 0.0) # (lat, lon, alt)
     timestamps: ndarray
     positions: ndarray
     attitudes: ndarray
+    date: datetime                      = datetime(2026, 1, 1) # Default date
     
     def __post_init__(self):
         if self.anchor[0] < -90.0 or self.anchor[0] > 90.0:      # Latitude limit
@@ -69,6 +71,8 @@ class GeneratorData:
             self.attitudes.shape[0] != self.timestamps.shape[0]
         ):
             raise ValueError("`attitudes` must be a 2D ndarray with shape (N,3)")
+        
+        # TODO Add date validation
 
 
 

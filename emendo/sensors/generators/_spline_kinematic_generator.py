@@ -41,32 +41,32 @@ class SplineKinematicGenerator(KinematicGenerator):
         ## Position
         pos_x_min = sp.optimize.minimize_scalar(
             lambda t: self.__trajectory(t)[0],
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
         pos_x_max = sp.optimize.minimize_scalar(
             lambda t: -self.__trajectory(t)[0],
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
         pos_y_min = sp.optimize.minimize_scalar(
             lambda t: self.__trajectory(t)[1],
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
         pos_y_max = sp.optimize.minimize_scalar(
             lambda t: -self.__trajectory(t)[1],
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
         pos_z_min = sp.optimize.minimize_scalar(
             lambda t: self.__trajectory(t)[2],
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
         pos_z_max = sp.optimize.minimize_scalar(
             lambda t: -self.__trajectory(t)[2],
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
         
@@ -81,9 +81,9 @@ class SplineKinematicGenerator(KinematicGenerator):
         
         ### Check bounds
         if not (
-            ((pos_x_min >= self.config['operation-area']['x']['min']) and ((pos_x_max <= self.config['operation-area']['x']['max']))) and
-            ((pos_y_min >= self.config['operation-area']['y']['min']) and ((pos_y_max <= self.config['operation-area']['y']['max']))) and
-            ((pos_z_min >= self.config['operation-area']['z']['min']) and ((pos_z_max <= self.config['operation-area']['z']['max'])))
+            ((pos_x_min >= self.cfg.bounds.zone.x[0]) and (pos_x_max <= self.cfg.bounds.zone.x[1])) and
+            ((pos_y_min >= self.cfg.bounds.zone.y[0]) and (pos_y_max <= self.cfg.bounds.zone.y[1])) and
+            ((pos_z_min >= self.cfg.bounds.zone.z[0]) and (pos_z_max <= self.cfg.bounds.zone.z[1]))
         ):
             # TODO Improve
             raise 'Trajectory allowed bounds exceeded'
@@ -91,55 +91,44 @@ class SplineKinematicGenerator(KinematicGenerator):
 
         
         ## Velocity
-        #vel_x_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__velocity(t)[0]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        #vel_y_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__velocity(t)[1]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        #vel_z_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__velocity(t)[2]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        
         vel_max = sp.optimize.minimize_scalar(
             lambda t: -np.sqrt(
                 self.__velocity(t)[0] ** 2 +
                 self.__velocity(t)[1] ** 2 + 
                 self.__velocity(t)[2] ** 2),
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
 
         ### Check successes
-        #if not (vel_x_max.success and vel_y_max.success and vel_z_max.success):
         if not vel_max.success:
             # TODO Improve
             raise 'OptimizeException for velocity'
 
         ### Check bounds
-        # if np.abs(np.max([vel_x_max.fun, vel_y_max.fun, vel_z_max.fun])) * np.sqrt(3) >= self.config['max-velocity']:
-        if np.abs(np.max(vel_max.fun)) >= self.config['max-velocity']:
+        if np.abs(np.max(vel_max.fun)) >= self.cfg.bounds.max_velocity:
             # TODO Improve
             raise 'Max velocity allowed exceeded'
 
 
 
         ## Acceleration
-        # acc_x_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__acceleration(t)[0]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        # acc_y_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__acceleration(t)[1]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
-        # acc_z_max = sp.optimize.minimize_scalar(lambda t: -np.abs(self.__acceleration(t)[2]), bounds = (self.config['min-time'], self.config['max-time'],), method="bounded")
         acc_max = sp.optimize.minimize_scalar(
             lambda t: -np.sqrt(
                 self.__acceleration(t)[0] ** 2 +
                 self.__acceleration(t)[1] ** 2 + 
                 self.__acceleration(t)[2] ** 2),
-            bounds = (self.config['min-time'], self.config['max-time'],),
+            bounds = (0, self.cfg.max_duration),
             method="bounded"
         )
         
         ### Check successes
-        # if not (acc_x_max.success and acc_y_max.success and acc_z_max.success):
         if not acc_max.success:
             # TODO Improve
             raise 'OptimizeException for acceleration'
 
         ### Check bounds
-        # if np.abs(np.max([acc_x_max.fun, acc_y_max.fun, acc_z_max.fun])) * np.sqrt(3) >= self.config['max-acceleration']:
-        if np.abs(np.max(acc_max.fun)) >= self.config['max-acceleration']:
+        if np.abs(np.max(acc_max.fun)) >= self.cfg.bounds.max_acceleration:
             # TODO Improve
             raise 'Max acceleration allowed exceeded'
 
