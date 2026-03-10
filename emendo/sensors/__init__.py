@@ -1,7 +1,10 @@
 # API
+## Modules
 from . import generators
-from ._sensors import Sensors
+## Config
 from ._sensors_config import SensorsConfig
+## Implementations
+from ._sensors import Sensors
 
 # Export
 __all__ = [

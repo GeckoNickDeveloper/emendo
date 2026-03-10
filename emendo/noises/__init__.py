@@ -1,8 +1,6 @@
 # API
 ## Config
 from ._noise_config import NoiseConfig
-## Proxy
-from ._noise_factory import NoiseFactory
 ## Interfaces
 from ._noise import Noise
 ## Implementations
@@ -11,7 +9,8 @@ from ._pink_noise import PinkNoise
 from ._white_noise import WhiteNoise
 from ._blue_noise import BlueNoise
 from ._violet_noise import VioletNoise
-
+## Factory
+from ._noise_factory import NoiseFactory
 
 
 # Export
@@ -22,8 +21,6 @@ __all__ = [
     # Classes
     ## Config
     'NoiseConfig',
-    ## Factory
-    'NoiseFactory',
     ## Interface
     'Noise',
     ## Implementations
@@ -32,4 +29,6 @@ __all__ = [
     'WhiteNoise',
     'BlueNoise',
     'VioletNoise',
+    ## Factory
+    'NoiseFactory',
 ]

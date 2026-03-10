@@ -1,8 +1,9 @@
 # Imports
-from dataclasses import dataclass
-from typing import Tuple
+from dataclasses import dataclass, field
+from typing import Tuple, Optional
 from numpy import ndarray
 from datetime import datetime
+import numpy as np
 
 # Implementations
 @dataclass(frozen = True)
@@ -39,9 +40,13 @@ class GeneratorBounds:
 @dataclass(frozen = True)
 class GeneratorData:
     anchor: Tuple[float, float, float]  = (0.0, 0.0, 0.0) # (lat, lon, alt)
-    timestamps: ndarray
-    positions: ndarray
-    attitudes: ndarray
+    timestamps: ndarray                 = np.zeros((1))
+    positions: ndarray                  = np.zeros((1, 3))
+    attitudes: ndarray                  = np.zeros((1, 3))
+
+    timestamps: Optional[np.ndarray]    = field(default_factory = lambda: np.array([]))  # shape (N,)
+    positions: Optional[np.ndarray]     = field(default_factory = lambda: np.empty((0, 3)))   # shape (N,3)
+    attitudes: Optional[np.ndarray]     = field(default_factory = lambda: np.empty((0, 3)))   # shape (N,3)
     date: datetime                      = datetime(2026, 1, 1) # Default date
     
     def __post_init__(self):
@@ -55,17 +60,17 @@ class GeneratorData:
             raise ValueError('Altitude must be included in range (0.0, 50000.0) m')
         
         
-        if self.timestamps.ndim != 1:
+        if self.timestamps is not None and self.timestamps.ndim != 1:
             raise ValueError("`timestamps` must be a 1D ndarray with shape (N)")
         
-        if (
+        if self.positions is not None and (
             self.positions.ndim != 2 or
             self.positions.shape[1] != 3 or 
             self.positions.shape[0] != self.timestamps.shape[0]
         ):
             raise ValueError("`positions` must be a 2D ndarray with shape (N,3)")
         
-        if (
+        if self.attitudes is not None and(
             self.attitudes.ndim != 2 or
             self.attitudes.shape[1] != 3 or 
             self.attitudes.shape[0] != self.timestamps.shape[0]
