@@ -14,26 +14,32 @@ class TestBrownNoise:
             seed    = 42
         )
 
-    def test_init(self, config):
-        noise = E.noises.BrownNoise(config)
-        assert noise is not None
-
     def test_generate_shape(self, config):
+        n = 1_000
         noise = E.noises.BrownNoise(config)
-        n = 1000
         samples = noise.generate(n)
 
         assert isinstance(samples, np.ndarray)
         assert samples.shape == (n,)
 
-    def test_reproducibility(self, config):
-        n = 500
-
+    def test_reproducibility_same_configs(self, config):
+        n = 1_000
         noise1 = E.noises.BrownNoise(config)
         noise2 = E.noises.BrownNoise(config)
 
         s1 = noise1.generate(n)
         s2 = noise2.generate(n)
+
+        assert np.array_equal(s1, s2)
+    
+    def test_reproducibility_seed_reset(self, config):
+        n = 1_000
+        noise = E.noises.BrownNoise(config)
+        base_seed = noise.cfg.seed
+        
+        s1 = noise.generate(n)
+        noise.seed(base_seed)
+        s2 = noise.generate(n)
 
         assert np.array_equal(s1, s2)
 
@@ -51,7 +57,7 @@ class TestBrownNoise:
             seed = 1
         )
 
-        n = 10000
+        n = 1_000
         s1 = E.noises.BrownNoise(cfg_small).generate(n)
         s2 = E.noises.BrownNoise(cfg_big).generate(n)
 

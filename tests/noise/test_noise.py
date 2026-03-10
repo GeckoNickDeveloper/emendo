@@ -14,6 +14,21 @@ class TestNoise:
             seed    = 42
         )
 
+    def test_init_value_error(self):
+        with pytest.raises(ValueError):
+            _ = E.noises.Noise(None)
+    
+    def test_init(self, config):
+        noise = E.noises.Noise(config)
+        
+        assert noise is not None
+
+    def test_seed(self, config):
+        noise = E.noises.Noise(config)
+        noise.seed(34)
+        
+        assert noise.cfg.seed == 34
+
     def test_raise_not_implemented(self, config):
         noise = E.noises.Noise(config)
         
