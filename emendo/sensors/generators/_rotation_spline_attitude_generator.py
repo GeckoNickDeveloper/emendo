@@ -28,13 +28,13 @@ class RotationSplineAttitudeGenerator(AttitudeGenerator):
     def attitude(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration / dt + 1e-9, dt)
+        t = np.arange(start, start + duration + 0.5 * dt, dt)
 
         self.__attitude(t, 0)
     
     def angular_rate(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration / dt + 1e-9, dt)
+        t = np.arange(start, start + duration + 0.5 * dt, dt)
 
         self.__attitude(t, 1)

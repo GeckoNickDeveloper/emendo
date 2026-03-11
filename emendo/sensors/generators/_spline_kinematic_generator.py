@@ -31,8 +31,8 @@ class SplineKinematicGenerator(KinematicGenerator):
     def __interpolate(self):
         bc = ([(2, np.zeros(3))], [(2, np.zeros(3))])
         self.__trajectory = sp.interpolate.make_interp_spline(
-            self.config['data']['timestamps'],
-            self.config['data']['positions'],
+            self.cfg.data.timestamps,
+            self.cfg.data.positions,
             k = 3,
             bc_type = bc
         )
@@ -81,16 +81,16 @@ class SplineKinematicGenerator(KinematicGenerator):
             pos_z_min.success and pos_z_max.success
         ):
             # TODO Improve
-            raise 'OptimizeException for position'
+            raise ValueError('OptimizeException for position')
         
         ### Check bounds
         if not (
-            ((pos_x_min >= self.cfg.bounds.zone.x[0]) and (pos_x_max <= self.cfg.bounds.zone.x[1])) and
-            ((pos_y_min >= self.cfg.bounds.zone.y[0]) and (pos_y_max <= self.cfg.bounds.zone.y[1])) and
-            ((pos_z_min >= self.cfg.bounds.zone.z[0]) and (pos_z_max <= self.cfg.bounds.zone.z[1]))
+            ((pos_x_min.fun >= self.cfg.bounds.zone.x[0]) and (pos_x_max.fun <= self.cfg.bounds.zone.x[1])) and
+            ((pos_y_min.fun >= self.cfg.bounds.zone.y[0]) and (pos_y_max.fun <= self.cfg.bounds.zone.y[1])) and
+            ((pos_z_min.fun >= self.cfg.bounds.zone.z[0]) and (pos_z_max.fun <= self.cfg.bounds.zone.z[1]))
         ):
             # TODO Improve
-            raise 'Trajectory allowed bounds exceeded'
+            raise ValueError('Trajectory allowed bounds exceeded')
 
 
         
@@ -107,12 +107,12 @@ class SplineKinematicGenerator(KinematicGenerator):
         ### Check successes
         if not vel_max.success:
             # TODO Improve
-            raise 'OptimizeException for velocity'
+            raise ValueError('OptimizeException for velocity')
 
         ### Check bounds
         if np.abs(np.max(vel_max.fun)) >= self.cfg.bounds.max_velocity:
             # TODO Improve
-            raise 'Max velocity allowed exceeded'
+            raise ValueError('Max velocity allowed exceeded')
 
 
 
@@ -129,32 +129,32 @@ class SplineKinematicGenerator(KinematicGenerator):
         ### Check successes
         if not acc_max.success:
             # TODO Improve
-            raise 'OptimizeException for acceleration'
+            raise ValueError('OptimizeException for acceleration')
 
         ### Check bounds
         if np.abs(np.max(acc_max.fun)) >= self.cfg.bounds.max_acceleration:
             # TODO Improve
-            raise 'Max acceleration allowed exceeded'
+            raise ValueError('Max acceleration allowed exceeded')
 
 
 
     def position(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration / dt + 1e-9, dt)
+        t = np.arange(start, start + duration + 0.5 * dt, dt)
         
         return self.__trajectory(t)
     
     def velocity(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration / dt + 1e-9, dt)
+        t = np.arange(start, start + duration + 0.5 * dt, dt)
         
         return self.__velocity(t)
     
     def acceleration(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration / dt + 1e-9, dt)
+        t = np.arange(start, start + duration + 0.5 * dt, dt)
         
         return self.__acceleration(t)

@@ -16,3 +16,9 @@ def test_attitude_generator_attitude_not_implemented():
     ag = AttitudeGenerator(cfg)
     with pytest.raises(NotImplementedError):
         ag.attitude(0.0, 1.0, 10.0)
+
+def test_attitude_generator_angular_rate_not_implemented():
+    cfg = GeneratorConfig()
+    ag = AttitudeGenerator(cfg)
+    with pytest.raises(NotImplementedError):
+        ag.angular_rate(0.0, 1.0, 10.0)
