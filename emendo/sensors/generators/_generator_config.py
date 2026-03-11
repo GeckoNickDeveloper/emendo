@@ -1,7 +1,6 @@
 # Imports
 from dataclasses import dataclass, field
 from typing import Tuple, Optional
-from numpy import ndarray
 from datetime import datetime
 import numpy as np
 
@@ -13,12 +12,19 @@ class GeneratorZone:
     z: Tuple[float, float] = (     0.0, 10_000.0)   # (min, max)
     
     def __post_init__(self):
-        if (
-            self.x[0] < -5_000.0 or self.x[1] >  5_000.0 or
-            self.y[0] < -5_000.0 or self.y[1] >  5_000.0 or
-            self.z[0] <      0.0 or self.z[1] > 10_000.0
-        ):
-            raise ValueError('Operational zone bounds exceeded. Bounds cannot exceed (10km x 10km x 10km)')
+        def check_axis(name, axis, min_val, max_val):
+            if axis is None:
+                raise ValueError(f"{name} cannot be None")
+            if len(axis) != 2:
+                raise ValueError(f"{name} must have exactly 2 elements")
+            if not (min_val <= axis[0] <= max_val):
+                raise ValueError(f"{name}[0]={axis[0]} out of bounds [{min_val}, {max_val}]")
+            if not (min_val <= axis[1] <= max_val):
+                raise ValueError(f"{name}[1]={axis[1]} out of bounds [{min_val}, {max_val}]")
+
+        check_axis("x", self.x, -5000.0, 5000.0)
+        check_axis("y", self.y, -5000.0, 5000.0)
+        check_axis("z", self.z, 0.0, 10000.0)
 
 
 
@@ -29,77 +35,87 @@ class GeneratorBounds:
     zone: GeneratorZone     = GeneratorZone()
     
     def __post_init__(self):
-        if self.max_velocity <= 0.0 or self.max_velocity > 3300.0:
-            raise ValueError('Max velocity module cannot exceed `3300.0`ms')
-        
-        if self.max_acceleration <= 0.0 or self.max_acceleration > 500.0:
-            raise ValueError('Max acceleration module cannot exceed `500.0`ms^-2')
+        def check_param(name, value, min_val, max_val):
+            if value is None:
+                raise ValueError(f"`{name}` cannot be None")
+            if value <= min_val:
+                raise ValueError(f"`{name}` must be > {min_val}")
+            if value > max_val:
+                raise ValueError(f"`{name}` cannot exceed {max_val}")
 
+        check_param("max_velocity", self.max_velocity, 0.0, 3300.0)
+        check_param("max_acceleration", self.max_acceleration, 0.0, 500.0)
+        
+        if self.zone is None:
+            raise ValueError(f"`zone` cannot be None")
+        
 
 
 @dataclass(frozen = True)
 class GeneratorData:
     anchor: Tuple[float, float, float]  = (0.0, 0.0, 0.0) # (lat, lon, alt)
-    timestamps: ndarray                 = np.zeros((1))
-    positions: ndarray                  = np.zeros((1, 3))
-    attitudes: ndarray                  = np.zeros((1, 3))
-
-    timestamps: Optional[np.ndarray]    = field(default_factory = lambda: np.array([]))  # shape (N,)
-    positions: Optional[np.ndarray]     = field(default_factory = lambda: np.empty((0, 3)))   # shape (N,3)
-    attitudes: Optional[np.ndarray]     = field(default_factory = lambda: np.empty((0, 3)))   # shape (N,3)
+    timestamps: Optional[np.ndarray]    = field(default_factory = lambda: np.array([]))         # shape (N,)
+    positions: Optional[np.ndarray]     = field(default_factory = lambda: np.empty((0, 3)))     # shape (N,3)
+    attitudes: Optional[np.ndarray]     = field(default_factory = lambda: np.empty((0, 3)))     # shape (N,3)
     date: datetime                      = datetime(2026, 1, 1) # Default date
     
     def __post_init__(self):
-        if self.anchor[0] < -90.0 or self.anchor[0] > 90.0:      # Latitude limit
-            raise ValueError('Latitude must be included in range (-90.0, 90.0) deg')
+        if self.anchor is None:
+            raise ValueError("`anchor` cannot be None")
+        if len(self.anchor) != 3:
+            raise ValueError("`anchor` must have exactly 3 elements")
         
-        if self.anchor[1] < -180.0 or self.anchor[1] > 180.0:    # Longitude limit
-            raise ValueError('Longitude must be included in range (-180.0, 180.0) deg')
-        
-        if self.anchor[2] < 0.0 or self.anchor[2] > 50_000.0:    # Altitude limit: max 50km
-            raise ValueError('Altitude must be included in range (0.0, 50000.0) m')
-        
-        
-        if self.timestamps is not None and self.timestamps.ndim != 1:
-            raise ValueError("`timestamps` must be a 1D ndarray with shape (N)")
-        
-        if self.positions is not None and (
-            self.positions.ndim != 2 or
-            self.positions.shape[1] != 3 or 
-            self.positions.shape[0] != self.timestamps.shape[0]
-        ):
-            raise ValueError("`positions` must be a 2D ndarray with shape (N,3)")
-        
-        if self.attitudes is not None and(
-            self.attitudes.ndim != 2 or
-            self.attitudes.shape[1] != 3 or 
-            self.attitudes.shape[0] != self.timestamps.shape[0]
-        ):
-            raise ValueError("`attitudes` must be a 2D ndarray with shape (N,3)")
-        
-        # TODO Add date validation
+        lat, lon, alt = self.anchor
+        if not (-90.0 <= lat <= 90.0):
+            raise ValueError("Latitude must be in range [-90, 90] deg")
+        if not (-180.0 <= lon <= 180.0):
+            raise ValueError("Longitude must be in range [-180, 180] deg")
+        if not (0.0 <= alt <= 50000.0):
+            raise ValueError("Altitude must be in range [0, 50000] m")
+
+        if self.timestamps.ndim != 1:
+            raise ValueError("`timestamps` must be a 1D ndarray (N,)")
+
+        if self.positions.ndim != 2 or self.positions.shape[1] != 3:
+            raise ValueError("`positions` must be 2D ndarray with shape (N,3)")
+        if self.positions.shape[0] != self.timestamps.shape[0]:
+            raise ValueError("`positions` and `timestamps` must have same length N")
+
+        if self.attitudes.ndim != 2 or self.attitudes.shape[1] != 3:
+            raise ValueError("`attitudes` must be 2D ndarray with shape (N,3)")
+        if self.attitudes.shape[0] != self.timestamps.shape[0]:
+            raise ValueError("`attitudes` and `timestamps` must have same length N")
+
+        # Optional: date validation
+        if not isinstance(self.date, datetime):
+            raise ValueError("`date` must be a datetime object")
 
 
 
 @dataclass(frozen = True)
 class GeneratorConfig:
-    bounds: GeneratorBounds = GeneratorBounds()
-    data: GeneratorData     = GeneratorData()
+    bounds: GeneratorBounds = field(default_factory = GeneratorBounds)
+    data: GeneratorData     = field(default_factory = GeneratorData)
     max_duration: float     = 600.0
     kinematic: str          = 'default'
     attitude: str           = 'default'
     magnetic: str           = 'default'
-    
+
     def __post_init__(self):
+        if self.bounds is None:
+            raise ValueError(f"`bounds` cannot be None")
+        
+        if self.data is None:
+            raise ValueError(f"`data` cannot be None")
+        
         if self.max_duration <= 0:
             raise ValueError("`max_duration` must be > 0")
-        
-        if self.kinematic not in ['default', 'spline']:
-            raise ValueError("`kinematic` value must be one of the following: `default`, `spline`")
-        
-        if self.attitude not in ['default', 'spline']:
-            raise ValueError("`attitude` value must be one of the following: `default`")
-        
-        if self.magnetic not in ['default', 'regular-grid']:
-            raise ValueError("`magnetic` value must be one of the following: `default`, `regular-grid`")
+
+        def _check_option(name, value, options):
+            if value not in options:
+                raise ValueError(f"`{name}` must be one of {options}")
+
+        _check_option("kinematic", self.kinematic, ['default', 'spline'])
+        _check_option("attitude", self.attitude, ['default', 'spline'])
+        _check_option("magnetic", self.magnetic, ['default', 'regular-grid'])
             
