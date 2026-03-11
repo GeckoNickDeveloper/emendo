@@ -7,10 +7,14 @@ import numpy as np
 # Implementation
 class Sensors:
     def __init__(self, cfg: SensorsConfig):
+        if cfg is None:
+            raise ValueError("Configuration can't be None")
+            
         self.cfg = cfg
         
-        self.generator = Generator(cfg.generator)
-        self.noise = NoiseFactory.create(cfg.noise)
+        # Attributes
+        self.generator = Generator(cfg.generator_cfg)
+        self.noise = NoiseFactory.create(cfg.noise_cfg)
     
     # Obtain measurements data
     def measurements(self):
