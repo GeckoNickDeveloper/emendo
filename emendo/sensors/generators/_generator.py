@@ -9,7 +9,8 @@ class Generator:
     }
 
     _attitude_map = {
-        #"default": ,
+        #"default": RotationSplineAttitudeGenerator,
+        #"rotation-spline": RotationSplineAttitudeGenerator,
     }
 
     _magnetic_map = {
@@ -18,6 +19,9 @@ class Generator:
     }
 
     def __init__(self, cfg: GeneratorConfig):
+        if cfg is None:
+            raise ValueError('`GeneratorConfig` cannot be None')
+        
         self.config = cfg
 
         # Generator selectors
