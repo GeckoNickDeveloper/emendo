@@ -17,7 +17,6 @@ class RegularGridMagneticGenerator(MagneticGenerator):
         super().__init__(cfg)
         
         # Attributes
-        self.__anchor = self.config['data']['anchor']
         self.__field: RegularGridInterpolator
 
         # Initialization
@@ -35,7 +34,7 @@ class RegularGridMagneticGenerator(MagneticGenerator):
 
         # Magnetic Grid
         ## Create magfield grid (WMM)
-        V = np.zeros(N)
+        V = np.zeros((N, N, N, 3))
 
         ## Populate grid
         geo = gm.GeoMag()
@@ -49,9 +48,9 @@ class RegularGridMagneticGenerator(MagneticGenerator):
                     dlat = np.rad2deg(y[i] / 6_378_000.0)
                     
                     # TODO implement real reading
-                    t_lat = self.__anchor[0] + dlat
-                    t_lon = self.__anchor[0] + dlon
-                    t_alt = self.__anchor[0] + z[i]
+                    t_lat = self.cfg.data.anchor[0] + dlat
+                    t_lon = self.cfg.data.anchor[1] + dlon
+                    t_alt = self.cfg.data.anchor[2] + z[i]
 
                     res = geo.calculate(
                         t_lat,
