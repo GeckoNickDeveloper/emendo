@@ -4,6 +4,7 @@ import numpy as np
 
 
 from scipy.spatial.transform import RotationSpline
+from scipy.spatial.transform import Rotation as R
 
 # Implementations
 class RotationSplineAttitudeGenerator(AttitudeGenerator):
@@ -19,13 +20,21 @@ class RotationSplineAttitudeGenerator(AttitudeGenerator):
         self.__attitude: RotationSpline
     
     def __interpolate(self):
-        #self.__trajectory = sp.interpolate.make_interp_spline(
-        #    self.cfg.data.timestamps,
-        #    self.cfg.data.attitudes,
-        #    k = 3,
-        #    bc_type = bc
-        #)
-        pass
+        times = self.cfg.data.timestamps
+        rotations = R.from_euler('xyz', self.cfg.data.attitudes, degrees = True)
+
+        self.__attitude = RotationSpline(times, rotations)
     
     def attitude(self, start: float, freq: float, duration: float):
-        raise NotImplementedError('Must implement `attitude` method')
+        # TODO Add check of simulation bounds exceeded
+        dt = 1.0 / freq
+        t = np.arange(start, start + duration / dt + 1e-9, dt)
+
+        self.__attitude(t, 0)
+    
+    def angular_rate(self, start: float, freq: float, duration: float):
+        # TODO Add check of simulation bounds exceeded
+        dt = 1.0 / freq
+        t = np.arange(start, start + duration / dt + 1e-9, dt)
+
+        self.__attitude(t, 1)
