@@ -18,6 +18,8 @@ class RotationSplineAttitudeGenerator(AttitudeGenerator):
         super().__init__(cfg)
         
         self.__attitude: RotationSpline
+
+        self.__interpolate()
     
     def __interpolate(self):
         times = self.cfg.data.timestamps
@@ -28,13 +30,13 @@ class RotationSplineAttitudeGenerator(AttitudeGenerator):
     def attitude(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration + 0.5 * dt, dt)
+        t = np.arange(start, start + duration, dt)
 
-        self.__attitude(t, 0)
+        return self.__attitude(t, 0)
     
     def angular_rate(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration + 0.5 * dt, dt)
+        t = np.arange(start, start + duration, dt)
 
-        self.__attitude(t, 1)
+        return self.__attitude(t, 1)

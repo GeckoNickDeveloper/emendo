@@ -141,20 +141,20 @@ class SplineKinematicGenerator(KinematicGenerator):
     def position(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration + 0.5 * dt, dt)
+        t = np.arange(start, start + duration, dt)
         
         return self.__trajectory(t)
     
     def velocity(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration + 0.5 * dt, dt)
+        t = np.arange(start, start + duration, dt)
         
         return self.__velocity(t)
     
     def acceleration(self, start: float, freq: float, duration: float):
         # TODO Add check of simulation bounds exceeded
         dt = 1.0 / freq
-        t = np.arange(start, start + duration + 0.5 * dt, dt)
+        t = np.arange(start, start + duration, dt)
         
         return self.__acceleration(t)
