@@ -1,3 +1,7 @@
+'''
+TODO:
+    - Improve code
+'''
 # Imports
 from . import Noise, NoiseConfig
 import numpy as np

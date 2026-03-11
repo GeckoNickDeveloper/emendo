@@ -1,3 +1,7 @@
+'''
+TODO:
+    - Improve code
+'''
 # Imports
 from . import GeneratorConfig, KinematicGenerator
 import scipy as sp

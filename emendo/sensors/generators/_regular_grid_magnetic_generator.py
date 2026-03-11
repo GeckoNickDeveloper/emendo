@@ -1,10 +1,12 @@
+'''
+TODO:
+    - Improve code
+'''
 # Imports
 from . import GeneratorConfig, MagneticGenerator
 from scipy.interpolate import RegularGridInterpolator
 import numpy as np
 import pygeomag as gm
-
-
 
 # Implementations
 class RegularGridMagneticGenerator(MagneticGenerator):
