@@ -11,6 +11,9 @@ class WhiteNoise(Noise):
     
     
     def generate(self, N: int):
+        if N is None or N <= 0:
+            raise ValueError("Number of samples must be > 0")
+        
         # Noise spectrum
         X = np.zeros(N, dtype = complex)
 

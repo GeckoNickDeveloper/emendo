@@ -8,9 +8,10 @@ class PinkNoise(Noise):
     def __init__(self, cfg: NoiseConfig):
         super().__init__(cfg)
     
-    
-    
     def generate(self, N: int):
+        if N is None or N <= 0:
+            raise ValueError("Number of samples must be > 0")
+        
         X = np.zeros(N, dtype=complex)
         half = N // 2
 

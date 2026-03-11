@@ -21,6 +21,27 @@ class TestBrownNoise:
 
         assert isinstance(samples, np.ndarray)
         assert samples.shape == (n,)
+    
+    def test_generate_negative_samples(self, config):
+        n = -1_000
+        noise = E.noises.BrownNoise(config)
+        
+        with pytest.raises(ValueError):
+            _ = noise.generate(n)
+            
+    def test_generate_zero_samples(self, config):
+        n = 0
+        noise = E.noises.BrownNoise(config)
+        
+        with pytest.raises(ValueError):
+            _ = noise.generate(n)
+            
+    def test_generate_none_samples(self, config):
+        n = None
+        noise = E.noises.BrownNoise(config)
+        
+        with pytest.raises(ValueError):
+            _ = noise.generate(n)    
 
     def test_reproducibility_same_configs(self, config):
         n = 1_000
