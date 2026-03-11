@@ -64,6 +64,15 @@ class TestBrownNoise:
 
         assert np.array_equal(s1, s2)
 
+    def test_subsequent_generations(self, config):
+        n = 1_000
+        noise = E.noises.BrownNoise(config)
+        
+        s1 = noise.generate(n)
+        s2 = noise.generate(n)
+
+        assert not np.array_equal(s1, s2)
+
     def test_scale_effect(self):
         cfg_small = E.noises.NoiseConfig(
             name = "brown",
