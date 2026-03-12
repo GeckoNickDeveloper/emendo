@@ -13,6 +13,7 @@ class VioletNoise(Noise):
         super().__init__(cfg)
     
     def generate(self, N: int):
+    # def generate(self, shape: Tuple[int, int], frequency: float):
         if N is None or N <= 0:
             raise ValueError("Number of samples must be > 0")
         

@@ -31,7 +31,7 @@ class GeneratorZone:
 @dataclass(frozen = True)
 class GeneratorBounds:
     max_acceleration: float = 500.0
-    max_velocity: float     = 3300.0
+    max_velocity: float     = 3_300.0
     zone: GeneratorZone     = GeneratorZone()
     
     def __post_init__(self):

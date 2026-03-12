@@ -1,5 +1,6 @@
 # Imports
 from . import NoiseConfig
+from typing import Tuple
 import numpy as np
 
 # Implementation
@@ -16,5 +17,8 @@ class Noise:
         self.rng = np.random.default_rng(self.cfg.seed)
 
     def generate(self, N: int):
-        raise NotImplementedError("Subclasses must implement generate")
+        raise NotImplementedError("`generate` must implement generate")
+    
+    #def generate(self, shape: Tuple[int, int], frequency: float):
+    #    raise NotImplementedError("`generate` must implement generate")
     

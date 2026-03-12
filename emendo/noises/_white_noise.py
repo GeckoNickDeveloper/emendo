@@ -12,9 +12,27 @@ class WhiteNoise(Noise):
     def __init__(self, cfg: NoiseConfig):
         super().__init__(cfg)
     
-    
-    
     def generate(self, N: int):
+    # def generate(self, shape: Tuple[int, int], frequency: float):
+    #     # Validation
+    #     if shape is None:
+    #         raise ValueError('`shape` cannot be None')
+    #     if len(shape) != 2:
+    #         raise ValueError('`shape` must contain 2 elements')
+    #     if shape[0] <= 0 or shape[1] <= 0:
+    #         raise ValueError('`shape` elements must be > 0')
+    #     
+    #     if frequency is None:
+    #         raise ValueError('`frequency` cannot be None')
+    #     if frequency <= 0:
+    #         raise ValueError('`frequency` must be > 0')
+    #     
+    #     
+    #     
+    #     # Actual Noise implementation
+    #     
+    #     
+
         if N is None or N <= 0:
             raise ValueError("Number of samples must be > 0")
         
