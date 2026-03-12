@@ -23,15 +23,15 @@ class Sensors:
         dt      = 1.0 / self.cfg.frequency
         dt_os   = 1.0 / (self.cfg.frequency * 20.0)
         
-        t       = np.arange(0, self.cfg.max_duration + dt / 2.0, dt)
-        t_os    = np.arange(0, self.cfg.max_duration + dt_os / 2.0, dt_os)
+        t       = np.arange(0, self.cfg.max_duration, dt)
+        t_os    = np.arange(0, self.cfg.max_duration, dt_os)
         
         # Get true accelerometer (20x oversample)
-        wf_gt_pos_os = self.generator.position(0, self.cfg.frequency * 20.0, self.cfg.max_duration)
-        wf_gt_acc_os = self.generator.acceleration(0, self.cfg.frequency * 20.0, self.cfg.max_duration)
+        wf_gt_pos_os = self.generator.position(t_os)
+        wf_gt_acc_os = self.generator.acceleration(t_os)
         # Get true orientation (20x oversample)
-        gt_att_os = self.generator.attitude(0, self.cfg.frequency * 20.0, self.cfg.max_duration)
-        gt_angular_rate_os = self.generator.angular_rate(0, self.cfg.frequency * 20.0, self.cfg.max_duration)
+        gt_att_os = self.generator.attitude(t_os)
+        gt_angular_rate_os = self.generator.angular_rate(t_os)
         # Get true magnetometer (20x oversample)
         wf_gt_mag_os = self.generator.magnetic(wf_gt_pos_os)
         

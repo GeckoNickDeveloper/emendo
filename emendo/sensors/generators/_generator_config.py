@@ -22,9 +22,9 @@ class GeneratorZone:
             if not (min_val <= axis[1] <= max_val):
                 raise ValueError(f"{name}[1]={axis[1]} out of bounds [{min_val}, {max_val}]")
 
-        check_axis("x", self.x, -5000.0, 5000.0)
-        check_axis("y", self.y, -5000.0, 5000.0)
-        check_axis("z", self.z, 0.0, 10000.0)
+        check_axis("x", self.x, -5_000.0, 5_000.0)
+        check_axis("y", self.y, -5_000.0, 5_000.0)
+        check_axis("z", self.z, 0.0, 10_000.0)
 
 
 
@@ -43,7 +43,7 @@ class GeneratorBounds:
             if value > max_val:
                 raise ValueError(f"`{name}` cannot exceed {max_val}")
 
-        check_param("max_velocity", self.max_velocity, 0.0, 3300.0)
+        check_param("max_velocity", self.max_velocity, 0.0, 3_300.0)
         check_param("max_acceleration", self.max_acceleration, 0.0, 500.0)
         
         if self.zone is None:

@@ -6,9 +6,9 @@ from ._kinematic_generator import KinematicGenerator
 from ._attitude_generator import AttitudeGenerator
 from ._magnetic_generator import MagneticGenerator
 ## Implementations
-from ._spline_kinematic_generator import SplineKinematicGenerator
-from ._rotation_spline_attitude_generator import RotationSplineAttitudeGenerator
-from ._regular_grid_magnetic_generator import RegularGridMagneticGenerator
+from ._default_kinematic_generator import DefaultKinematicGenerator
+from ._default_attitude_generator import DefaultAttitudeGenerator
+from ._default_magnetic_generator import DefaultMagneticGenerator
 ## Proxy
 from ._generator import Generator
 
@@ -30,11 +30,11 @@ __all__ = [
     
     ### Implementations
     #### KinematicGenerator
-    'SplineKinematicGenerator',
+    'DefaultKinematicGenerator',
     #### AttitudeGenerator
-    'RotationSplineAttitudeGenerator',
+    'DefaultAttitudeGenerator',
     #### MagneticGenerator
-    'RegularGridMagneticGenerator',
+    'DefaultMagneticGenerator',
 
     ## Proxy
     'Generator',

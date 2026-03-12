@@ -9,7 +9,7 @@ import numpy as np
 import pygeomag as gm
 
 # Implementations
-class RegularGridMagneticGenerator(MagneticGenerator):
+class DefaultMagneticGenerator(MagneticGenerator):
     '''
     MagneticGenerator interface for emendo sensors simulation
 

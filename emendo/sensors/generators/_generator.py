@@ -4,27 +4,24 @@ from . import (
     KinematicGenerator,
     AttitudeGenerator,
     MagneticGenerator,
-    SplineKinematicGenerator,
-    RegularGridMagneticGenerator,
-    RotationSplineAttitudeGenerator,
+    DefaultKinematicGenerator,
+    DefaultMagneticGenerator,
+    DefaultAttitudeGenerator,
 )
 
 
 # Implementation
 class Generator:
     _kinematic_map = {
-        "default": SplineKinematicGenerator,
-        "spline": SplineKinematicGenerator,
+        "default": DefaultKinematicGenerator,
     }
 
     _attitude_map = {
-        "default": RotationSplineAttitudeGenerator,
-        "rotation-spline": RotationSplineAttitudeGenerator,
+        "default": DefaultAttitudeGenerator,
     }
 
     _magnetic_map = {
-        "default": RegularGridMagneticGenerator,
-        "regular-grid": RegularGridMagneticGenerator,
+        "default": DefaultMagneticGenerator,
     }
 
     def __init__(self, cfg: GeneratorConfig):
@@ -39,7 +36,7 @@ class Generator:
         self.__magnetic: MagneticGenerator  = self._magnetic_map[cfg.magnetic](cfg)
 
 
-
+    # Trajectory
     def position(self, start, freq, duration):
         return self.__kinematic.position(start, freq, duration)
 
@@ -49,11 +46,13 @@ class Generator:
     def acceleration(self, start, freq, duration):
         return self.__kinematic.acceleration(start, freq, duration)
 
+    # Attitude
     def attitude(self, start, freq, duration):
         return self.__attitude.attitude(start, freq, duration)
     
     def angular_rate(self, start, freq, duration):
         return self.__attitude.angular_rate(start, freq, duration)
 
+    # Magnetic
     def magnetic(self, positions):
         return self.__magnetic.magnetic(positions)

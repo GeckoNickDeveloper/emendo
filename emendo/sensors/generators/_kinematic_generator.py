@@ -15,11 +15,11 @@ class KinematicGenerator:
         
         self.cfg = cfg
 
-    def position(self, start: float, freq: float, duration: float):
+    def position(self, timesteps: np.ndarray):
         raise NotImplementedError('Must implement `position` method')
     
-    def velocity(self, start: float, freq: float, duration: float):
+    def velocity(self, timesteps: np.ndarray):
         raise NotImplementedError('Must implement `velocity` method')
     
-    def acceleration(self, start: float, freq: float, duration: float):
+    def acceleration(self, timesteps: np.ndarray):
         raise NotImplementedError('Must implement `acceleration` method')

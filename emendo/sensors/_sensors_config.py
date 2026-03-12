@@ -6,8 +6,8 @@ from ..noises import NoiseConfig
 # Implementations
 @dataclass(frozen = True)
 class SensorsConfig:
-    generator_cfg: GeneratorConfig = field(default_factory=GeneratorConfig)
-    noise_cfg: NoiseConfig         = field(default_factory=NoiseConfig)
+    generator_cfg: GeneratorConfig = field(default_factory = GeneratorConfig)
+    noise_cfg: NoiseConfig         = field(default_factory = NoiseConfig)
     max_duration: float            = 600.0
     frequency: float               = 100.0
     aliasing: bool                 = False

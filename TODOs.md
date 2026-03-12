@@ -21,7 +21,7 @@ In this document, all the TODOs are listed for foture development and adjustemen
 
 ### sensors
 - [ ] `Sensors`:
-    - [ ] Add noise to data
+    - [ ] Add different noise generators
     - [ ] Add noise to data
 
 - [ ] `SensorsConfig`:

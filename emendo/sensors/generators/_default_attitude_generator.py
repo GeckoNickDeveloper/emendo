@@ -7,7 +7,7 @@ from scipy.spatial.transform import RotationSpline
 from scipy.spatial.transform import Rotation as R
 
 # Implementations
-class RotationSplineAttitudeGenerator(AttitudeGenerator):
+class DefaultAttitudeGenerator(AttitudeGenerator):
     '''
     AttitudeGenerator interface for emendo sensors simulation
 
@@ -27,16 +27,12 @@ class RotationSplineAttitudeGenerator(AttitudeGenerator):
 
         self.__attitude = RotationSpline(times, rotations)
     
-    def attitude(self, start: float, freq: float, duration: float):
+    def attitude(self, timesteps: np.ndarray):
         # TODO Add check of simulation bounds exceeded
-        dt = 1.0 / freq
-        t = np.arange(start, start + duration, dt)
-
-        return self.__attitude(t, 0)
+        
+        return self.__attitude(timesteps, 0)
     
-    def angular_rate(self, start: float, freq: float, duration: float):
+    def angular_rate(self, timesteps: np.ndarray):
         # TODO Add check of simulation bounds exceeded
-        dt = 1.0 / freq
-        t = np.arange(start, start + duration, dt)
 
-        return self.__attitude(t, 1)
+        return self.__attitude(timesteps, 1)

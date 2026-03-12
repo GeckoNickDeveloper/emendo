@@ -8,7 +8,7 @@ import scipy as sp
 import numpy as np
 
 # Implementations
-class SplineKinematicGenerator(KinematicGenerator):
+class DefaultKinematicGenerator(KinematicGenerator):
     '''
     SplineKinematicGenerator for emendo sensors simulation
 
@@ -138,23 +138,17 @@ class SplineKinematicGenerator(KinematicGenerator):
 
 
 
-    def position(self, start: float, freq: float, duration: float):
+    def position(self, timesteps: np.ndarray):
         # TODO Add check of simulation bounds exceeded
-        dt = 1.0 / freq
-        t = np.arange(start, start + duration, dt)
         
-        return self.__trajectory(t)
+        return self.__trajectory(timesteps)
     
-    def velocity(self, start: float, freq: float, duration: float):
+    def velocity(self, timesteps: np.ndarray):
         # TODO Add check of simulation bounds exceeded
-        dt = 1.0 / freq
-        t = np.arange(start, start + duration, dt)
         
-        return self.__velocity(t)
+        return self.__velocity(timesteps)
     
-    def acceleration(self, start: float, freq: float, duration: float):
+    def acceleration(self, timesteps: np.ndarray):
         # TODO Add check of simulation bounds exceeded
-        dt = 1.0 / freq
-        t = np.arange(start, start + duration, dt)
         
-        return self.__acceleration(t)
+        return self.__acceleration(timesteps)
