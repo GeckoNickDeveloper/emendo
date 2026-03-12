@@ -34,17 +34,17 @@ In this document, all the TODOs are listed for foture development and adjustemen
 
 #### generators
 - [ ] `KinameticGenerator` implementations:
-    - [ ] Switch to timestamp generation (no `start`, `stop`, `freq` parameters)
-    - [ ] Add check for max_duration (timestamp must not exceed max_duration)
+    - [x] Switch to timestamp generation (no `start`, `stop`, `freq` parameters)
+    - [x] Add check for max_duration (timestamp must not exceed max_duration)
     - [ ] Refactor
 
 - [ ] `AttitudeGenerator` implementations:
-    - [ ] Switch to timestamp generation (no `start`, `stop`, `freq` parameters)
-    - [ ] Add check for max_duration (timestamp must not exceed max_duration)
+    - [x] Switch to timestamp generation (no `start`, `stop`, `freq` parameters)
+    - [x] Add check for max_duration (timestamp must not exceed max_duration)
     - [ ] Refactor
 
 - [ ] `MagneticGenerator` implementations:
-    - [ ] Add out-of-bound check for position
+    - [x] Add out-of-bound check for position
     - [ ] Refactor
 
 - [ ] `GeneratorConfig`:

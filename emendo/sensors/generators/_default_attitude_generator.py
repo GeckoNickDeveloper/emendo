@@ -28,11 +28,21 @@ class DefaultAttitudeGenerator(AttitudeGenerator):
         self.__attitude = RotationSpline(times, rotations)
     
     def attitude(self, timesteps: np.ndarray):
-        # TODO Add check of simulation bounds exceeded
+        if timesteps is None:
+            raise ValueError('`timesteps` cannot be None')
+        if timesteps.ndim != 1:
+            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+        if np.max(timesteps) >= self.cfg.max_duration:
+            raise ValueError("`timesteps` must not exceed configuration bounds")
         
         return self.__attitude(timesteps, 0)
     
     def angular_rate(self, timesteps: np.ndarray):
-        # TODO Add check of simulation bounds exceeded
+        if timesteps is None:
+            raise ValueError('`timesteps` cannot be None')
+        if timesteps.ndim != 1:
+            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+        if np.max(timesteps) >= self.cfg.max_duration:
+            raise ValueError("`timesteps` must not exceed configuration bounds")
 
         return self.__attitude(timesteps, 1)

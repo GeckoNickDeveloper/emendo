@@ -139,16 +139,31 @@ class DefaultKinematicGenerator(KinematicGenerator):
 
 
     def position(self, timesteps: np.ndarray):
-        # TODO Add check of simulation bounds exceeded
+        if timesteps is None:
+            raise ValueError('`timesteps` cannot be None')
+        if timesteps.ndim != 1:
+            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+        if np.max(timesteps) >= self.cfg.max_duration:
+            raise ValueError("`timesteps` must not exceed configuration bounds")
         
         return self.__trajectory(timesteps)
     
     def velocity(self, timesteps: np.ndarray):
-        # TODO Add check of simulation bounds exceeded
+        if timesteps is None:
+            raise ValueError('`timesteps` cannot be None')
+        if timesteps.ndim != 1:
+            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+        if np.max(timesteps) >= self.cfg.max_duration:
+            raise ValueError("`timesteps` must not exceed configuration bounds")
         
         return self.__velocity(timesteps)
     
     def acceleration(self, timesteps: np.ndarray):
-        # TODO Add check of simulation bounds exceeded
+        if timesteps is None:
+            raise ValueError('`timesteps` cannot be None')
+        if timesteps.ndim != 1:
+            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+        if np.max(timesteps) >= self.cfg.max_duration:
+            raise ValueError("`timesteps` must not exceed configuration bounds")
         
         return self.__acceleration(timesteps)

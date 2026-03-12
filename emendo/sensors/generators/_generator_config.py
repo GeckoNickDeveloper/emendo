@@ -70,7 +70,7 @@ class GeneratorData:
             raise ValueError("Latitude must be in range [-90, 90] deg")
         if not (-180.0 <= lon <= 180.0):
             raise ValueError("Longitude must be in range [-180, 180] deg")
-        if not (0.0 <= alt <= 50000.0):
+        if not (0.0 <= alt <= 50_000.0):
             raise ValueError("Altitude must be in range [0, 50000] m")
 
         if self.timestamps.ndim != 1:

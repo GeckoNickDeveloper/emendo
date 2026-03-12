@@ -76,6 +76,19 @@ class DefaultMagneticGenerator(MagneticGenerator):
 
 
     def magnetic(self, positions: np.ndarray):
-        # TODO Add position validation        
+        if positions is None:
+            raise ValueError('`positions` cannot be None')
+        if positions.ndim != 2 or positions.shape[1] != 3:
+            raise ValueError("`positions` must be 2D ndarray with shape (N,3)")
+        
+        min_pos = np.min(positions, axis = 0) # (x, y, z)
+        max_pos = np.max(positions, axis = 0) # (x, y, z)
+
+        if (
+            min_pos[0] < self.cfg.bounds.zone.x[0] or max_pos[0] > self.cfg.bounds.zone.x[1] or 
+            min_pos[1] < self.cfg.bounds.zone.y[0] or max_pos[1] > self.cfg.bounds.zone.y[1] or 
+            min_pos[2] < self.cfg.bounds.zone.z[0] or max_pos[2] > self.cfg.bounds.zone.z[1]
+        ):
+            raise ValueError("`positions` must not exceed configuration bounds")
         
         return self.__field(positions)
