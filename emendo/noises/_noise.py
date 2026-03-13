@@ -16,9 +16,5 @@ class Noise:
         self.cfg.set_seed(seed)
         self.rng = np.random.default_rng(self.cfg.seed)
 
-    def generate(self, N: int):
+    def generate(self, shape: Tuple[int, int], frequency: float):
         raise NotImplementedError("`generate` must implement generate")
-    
-    #def generate(self, shape: Tuple[int, int], frequency: float):
-    #    raise NotImplementedError("`generate` must implement generate")
-    

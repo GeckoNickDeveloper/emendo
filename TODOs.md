@@ -8,8 +8,8 @@ In this document, all the TODOs are listed for foture development and adjustemen
 
 ### noises
 - [ ] `Noise` implementations:
-    - [ ] Add multi-channel noise generation by passing a shape
-    - [ ] Refactor
+    - [x] Add multi-channel noise generation by passing a shape
+    - [x] Refactor
 
 - [ ] `NoiseConfig`:
     - [ ] Create serializer to dictionary
