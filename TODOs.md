@@ -7,7 +7,7 @@ In this document, all the TODOs are listed for foture development and adjustemen
     - [ ] Add emendo errors in order to limit usage of mixed exceptions 
 
 ### noises
-- [ ] `Noise` implementations:
+- [x] `Noise` implementations:
     - [x] Add multi-channel noise generation by passing a shape
     - [x] Refactor
 

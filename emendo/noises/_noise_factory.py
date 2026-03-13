@@ -1,5 +1,13 @@
 # Imports
-from . import NoiseConfig, Noise, BrownNoise, PinkNoise, WhiteNoise, BlueNoise, VioletNoise
+from . import (
+    NoiseConfig,
+    Noise,
+    BrownNoise,
+    PinkNoise,
+    WhiteNoise,
+    BlueNoise,
+    VioletNoise
+)
 
 # Implementations
 class NoiseFactory:
