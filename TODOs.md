@@ -14,15 +14,17 @@ In this document, all the TODOs are listed for foture development and adjustemen
 - [ ] `NoiseConfig`:
     - [ ] Create serializer to dictionary
     - [ ] Create deserializer from dictionary
+    - [x] Remove frequency
 
-- [ ] Add `MagneticNoise`:
+- [ ] Add `MagneticBias`:
     - [ ] Add soft-iron deformation
     - [ ] Add hard-iron deformation
 
 ### sensors
 - [ ] `Sensors`:
     - [ ] Add different noise generators
-    - [ ] Add noise to data
+    - [x] Add noise to data
+    - [x] Add anti-aliasing filter
 
 - [ ] `SensorsConfig`:
     - [ ] Add deserialization from file

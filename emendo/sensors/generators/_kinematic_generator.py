@@ -11,7 +11,9 @@ class KinematicGenerator:
     '''
     def __init__(self, cfg: GeneratorConfig):
         if cfg is None:
-            raise ValueError('`GeneratorConfig` cannot be None')
+            raise ValueError('`cfg` cannot be None')
+        if not isinstance(cfg, GeneratorConfig):
+            raise ValueError('`cfg` must be a `GeneratorConfig`')
         
         self.cfg = cfg
 

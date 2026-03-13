@@ -14,14 +14,20 @@ class SensorsConfig:
 
     def __post_init__(self):
         if self.generator_cfg is None:
-            raise ValueError("`generator_cfg` cannot be None")
+            raise ValueError('`generator_cfg` cannot be None')
+        if not isinstance(self.generator_cfg, GeneratorConfig):
+            raise ValueError('`generator_cfg` must be a `GeneratorConfig`')
+            
+        
         if self.noise_cfg is None:
-            raise ValueError("`noise_cfg` cannot be None")
+            raise ValueError('`noise_cfg` cannot be None')
+        if not isinstance(self.noise_cfg, NoiseConfig):
+            raise ValueError('`noise_cfg` must be a `NoiseConfig`')
 
         if self.max_duration is None or self.max_duration <= 0.0:
-            raise ValueError("`max_duration` must be > 0")
+            raise ValueError('`max_duration` must be > 0')
         if self.frequency is None or self.frequency <= 0.0:
-            raise ValueError("`frequency` must be > 0")
+            raise ValueError('`frequency` must be > 0')
 
         if not isinstance(self.aliasing, bool):
-            raise TypeError("`aliasing` must be a boolean")
+            raise TypeError('`aliasing` must be a boolean')

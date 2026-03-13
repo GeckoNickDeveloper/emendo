@@ -46,32 +46,32 @@ class DefaultKinematicGenerator(KinematicGenerator):
         pos_x_min = sp.optimize.minimize_scalar(
             lambda t: self.__trajectory(t)[0],
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
         pos_x_max = sp.optimize.minimize_scalar(
             lambda t: -self.__trajectory(t)[0],
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
         pos_y_min = sp.optimize.minimize_scalar(
             lambda t: self.__trajectory(t)[1],
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
         pos_y_max = sp.optimize.minimize_scalar(
             lambda t: -self.__trajectory(t)[1],
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
         pos_z_min = sp.optimize.minimize_scalar(
             lambda t: self.__trajectory(t)[2],
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
         pos_z_max = sp.optimize.minimize_scalar(
             lambda t: -self.__trajectory(t)[2],
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
         
         ### Check successes
@@ -101,7 +101,7 @@ class DefaultKinematicGenerator(KinematicGenerator):
                 self.__velocity(t)[1] ** 2 + 
                 self.__velocity(t)[2] ** 2),
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
 
         ### Check successes
@@ -123,7 +123,7 @@ class DefaultKinematicGenerator(KinematicGenerator):
                 self.__acceleration(t)[1] ** 2 + 
                 self.__acceleration(t)[2] ** 2),
             bounds = (0, self.cfg.max_duration),
-            method="bounded"
+            method='bounded'
         )
         
         ### Check successes
@@ -142,9 +142,9 @@ class DefaultKinematicGenerator(KinematicGenerator):
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
-            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+            raise ValueError('`timesteps` must be 1D ndarray with shape (N,)')
         if np.max(timesteps) >= self.cfg.max_duration:
-            raise ValueError("`timesteps` must not exceed configuration bounds")
+            raise ValueError('`timesteps` must not exceed configuration bounds')
         
         return self.__trajectory(timesteps)
     
@@ -152,9 +152,9 @@ class DefaultKinematicGenerator(KinematicGenerator):
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
-            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+            raise ValueError('`timesteps` must be 1D ndarray with shape (N,)')
         if np.max(timesteps) >= self.cfg.max_duration:
-            raise ValueError("`timesteps` must not exceed configuration bounds")
+            raise ValueError('`timesteps` must not exceed configuration bounds')
         
         return self.__velocity(timesteps)
     
@@ -162,8 +162,8 @@ class DefaultKinematicGenerator(KinematicGenerator):
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
-            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+            raise ValueError('`timesteps` must be 1D ndarray with shape (N,)')
         if np.max(timesteps) >= self.cfg.max_duration:
-            raise ValueError("`timesteps` must not exceed configuration bounds")
+            raise ValueError('`timesteps` must not exceed configuration bounds')
         
         return self.__acceleration(timesteps)

@@ -31,9 +31,9 @@ class DefaultAttitudeGenerator(AttitudeGenerator):
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
-            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+            raise ValueError('`timesteps` must be 1D ndarray with shape (N,)')
         if np.max(timesteps) >= self.cfg.max_duration:
-            raise ValueError("`timesteps` must not exceed configuration bounds")
+            raise ValueError('`timesteps` must not exceed configuration bounds')
         
         return self.__attitude(timesteps, 0)
     
@@ -41,8 +41,8 @@ class DefaultAttitudeGenerator(AttitudeGenerator):
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
-            raise ValueError("`timesteps` must be 1D ndarray with shape (N,)")
+            raise ValueError('`timesteps` must be 1D ndarray with shape (N,)')
         if np.max(timesteps) >= self.cfg.max_duration:
-            raise ValueError("`timesteps` must not exceed configuration bounds")
+            raise ValueError('`timesteps` must not exceed configuration bounds')
 
         return self.__attitude(timesteps, 1)

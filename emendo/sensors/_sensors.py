@@ -9,7 +9,9 @@ import numpy as np
 class Sensors:
     def __init__(self, cfg: SensorsConfig):
         if cfg is None:
-            raise ValueError("Configuration can't be None")
+            raise ValueError("`cfg` cannot be None")
+        if not isinstance(cfg, SensorsConfig):
+            raise ValueError("`cfg` must be a `SensorConfig`")
             
         self.cfg = cfg
         
@@ -36,9 +38,9 @@ class Sensors:
         wf_gt_mag_os = self.generator.magnetic(wf_gt_pos_os)
         
         # Get noise modeling (20x oversample)
-        noise_acc_x = self.noise.generate(wf_gt_pos_os.shape[0])
-        noise_acc_y = self.noise.generate(wf_gt_pos_os.shape[0])
-        noise_acc_z = self.noise.generate(wf_gt_pos_os.shape[0])
+        noise_acc   = self.noise.generate(wf_gt_pos_os.shape, self.cfg.frequency * 20.0)
+        noise_gyro  = self.noise.generate(gt_angular_rate_os.shape, self.cfg.frequency * 20.0)
+        noise_mag   = self.noise.generate(wf_gt_mag_os.shape, self.cfg.frequency * 20.0)
         
         # Rotate to body frame
         # wf2bf = sp.spatial.transform.RigidTransform(gt_att_os)
@@ -53,12 +55,37 @@ class Sensors:
         
         # Add noise        
         ## Accelerometer
+        bf_gt_acc_os        += noise_acc
         ## Gyroscope
+        gt_angular_rate_os  += noise_gyro
         ## Magnetometer
+        bf_gt_mag_os        += noise_mag
         
         # Anti-aliasing filter (optional)
         if not self.cfg.aliasing:
-            pass
+            # Compute coefficients of the Anti-Aliasing filter
+            filter = sp.signal.butter(
+                3,
+                self.cfg.frequency / 2,
+                btype = 'lowpass',
+                fs = self.cfg.frequency * 20.0)
+            
+            # Apply the Anti-Aliasing filter
+            bf_gt_acc_os = sp.signal.lfilter(
+                filter[0],
+                filter[1],
+                bf_gt_acc_os,
+                axis = 0)
+            gt_angular_rate_os = sp.signal.lfilter(
+                filter[0],
+                filter[1],
+                gt_angular_rate_os,
+                axis = 0)
+            bf_gt_mag_os = sp.signal.lfilter(
+                filter[0],
+                filter[1],
+                bf_gt_mag_os,
+                axis = 0)
         
         # Downsample (decimation)
         ## Accelerometer
