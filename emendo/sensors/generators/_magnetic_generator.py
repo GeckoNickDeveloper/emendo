@@ -14,7 +14,7 @@ class MagneticGenerator:
     
     def __init__(self, cfg: GeneratorConfig):
         if cfg is None:
-            raise ValueError('`GeneratorConfig` cannot be `None`')
+            raise ValueError('`GeneratorConfig` cannot be None')
         
         self.cfg = cfg
 
