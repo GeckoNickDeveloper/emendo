@@ -7,9 +7,9 @@ import numpy as np
 # Implementations
 @dataclass(frozen = True)
 class GeneratorZone:
-    x: Tuple[float, float] = (-5_000.0,  5_000.0)   # (min, max)
-    y: Tuple[float, float] = (-5_000.0,  5_000.0)   # (min, max)
-    z: Tuple[float, float] = (     0.0, 10_000.0)   # (min, max)
+    x: Tuple[float, float] = (-5_000.0, 5_000.0)   # (min, max)
+    y: Tuple[float, float] = (-5_000.0, 5_000.0)   # (min, max)
+    z: Tuple[float, float] = (-5_000.0, 5_000.0)   # (min, max)
     
     def __post_init__(self):
         def check_axis(name, axis, min_val, max_val):
@@ -24,7 +24,7 @@ class GeneratorZone:
 
         check_axis('x', self.x, -5_000.0, 5_000.0)
         check_axis('y', self.y, -5_000.0, 5_000.0)
-        check_axis('z', self.z, 0.0, 10_000.0)
+        check_axis('z', self.z, -5_000.0, 5_000.0)
 
 
 

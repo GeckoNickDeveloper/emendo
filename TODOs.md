@@ -1,5 +1,5 @@
 # TODOs
-In this document, all the TODOs are listed for foture development and adjustements.
+In this document, all the TODOs are listed for future development and adjustements.
 
 ## emendo
 ### errors.py

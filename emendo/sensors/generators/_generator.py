@@ -8,6 +8,7 @@ from . import (
     DefaultMagneticGenerator,
     DefaultAttitudeGenerator,
 )
+import numpy as np
 
 
 # Implementation
@@ -37,22 +38,22 @@ class Generator:
 
 
     # Trajectory
-    def position(self, start, freq, duration):
-        return self.__kinematic.position(start, freq, duration)
+    def position(self, timesteps: np.ndarray):
+        return self.__kinematic.position(timesteps)
 
-    def velocity(self, start, freq, duration):
-        return self.__kinematic.velocity(start, freq, duration)
+    def velocity(self, timesteps: np.ndarray):
+        return self.__kinematic.velocity(timesteps)
 
-    def acceleration(self, start, freq, duration):
-        return self.__kinematic.acceleration(start, freq, duration)
+    def acceleration(self, timesteps: np.ndarray):
+        return self.__kinematic.acceleration(timesteps)
 
     # Attitude
-    def attitude(self, start, freq, duration):
-        return self.__attitude.attitude(start, freq, duration)
+    def attitude(self, timesteps: np.ndarray):
+        return self.__attitude.attitude(timesteps)
     
-    def angular_rate(self, start, freq, duration):
-        return self.__attitude.angular_rate(start, freq, duration)
+    def angular_rate(self, timesteps: np.ndarray):
+        return self.__attitude.angular_rate(timesteps)
 
     # Magnetic
-    def magnetic(self, positions):
+    def magnetic(self, positions: np.ndarray):
         return self.__magnetic.magnetic(positions)
