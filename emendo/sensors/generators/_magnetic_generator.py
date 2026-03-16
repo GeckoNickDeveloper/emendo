@@ -20,5 +20,5 @@ class MagneticGenerator:
         
         self.cfg = cfg
 
-    def magnetic(self, positions: np.ndarray):
+    def magnetic(self, positions: np.ndarray) -> np.ndarray:
         raise NotImplementedError('Must implement `magnetic` method')

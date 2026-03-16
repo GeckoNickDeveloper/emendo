@@ -11,7 +11,7 @@ class GeneratorZone:
     y: Tuple[float, float] = (-5_000.0, 5_000.0)   # (min, max)
     z: Tuple[float, float] = (-5_000.0, 5_000.0)   # (min, max)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         def check_axis(name, axis, min_val, max_val):
             if axis is None:
                 raise ValueError(f'{name} cannot be None')
@@ -34,7 +34,7 @@ class GeneratorBounds:
     max_velocity: float     = 3_300.0
     zone: GeneratorZone     = GeneratorZone()
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         def check_param(name, value, min_val, max_val):
             if value is None:
                 raise ValueError(f'`{name}` cannot be None')
@@ -61,7 +61,7 @@ class GeneratorData:
     attitudes: Optional[np.ndarray]     = field(default_factory = lambda: np.empty((0, 3)))     # shape (N,3)
     date: datetime                      = datetime(2026, 1, 1) # Default date
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.anchor is None:
             raise ValueError('`anchor` cannot be None')
         if len(self.anchor) != 3:
@@ -103,7 +103,7 @@ class GeneratorConfig:
     attitude: str           = 'default'
     magnetic: str           = 'default'
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.bounds is None:
             raise ValueError(f'`bounds` cannot be None')
         if not isinstance(self.bounds, GeneratorBounds):

@@ -12,7 +12,7 @@ class SensorsConfig:
     frequency: float               = 100.0
     aliasing: bool                 = False
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.generator_cfg is None:
             raise ValueError('`generator_cfg` cannot be None')
         if not isinstance(self.generator_cfg, GeneratorConfig):

@@ -75,7 +75,7 @@ class DefaultMagneticGenerator(MagneticGenerator):
 
 
 
-    def magnetic(self, positions: np.ndarray):
+    def magnetic(self, positions: np.ndarray) -> np.ndarray:
         if positions is None:
             raise ValueError('`positions` cannot be None')
         if positions.ndim != 2 or positions.shape[1] != 3:

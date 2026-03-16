@@ -10,7 +10,7 @@ class BlueNoise(Noise):
         super().__init__(cfg)
     
     # def generate(self, N: int):
-    def generate(self, shape: Tuple[int, int], frequency: float):
+    def generate(self, shape: Tuple[int, int], frequency: float) -> np.ndarray:
         # Validation
         if shape is None:
             raise ValueError('`shape` cannot be None')

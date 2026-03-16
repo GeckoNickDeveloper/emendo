@@ -147,7 +147,7 @@ class DefaultKinematicGenerator(KinematicGenerator):
 
 
 
-    def position(self, timesteps: np.ndarray):
+    def position(self, timesteps: np.ndarray) -> np.ndarray:
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
@@ -157,7 +157,7 @@ class DefaultKinematicGenerator(KinematicGenerator):
         
         return self.__trajectory(timesteps)
     
-    def velocity(self, timesteps: np.ndarray):
+    def velocity(self, timesteps: np.ndarray) -> np.ndarray:
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
@@ -167,7 +167,7 @@ class DefaultKinematicGenerator(KinematicGenerator):
         
         return self.__velocity(timesteps)
     
-    def acceleration(self, timesteps: np.ndarray):
+    def acceleration(self, timesteps: np.ndarray) -> np.ndarray:
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:

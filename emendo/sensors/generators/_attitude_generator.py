@@ -18,8 +18,8 @@ class AttitudeGenerator:
         
         self.cfg = cfg
     
-    def attitude(self, timesteps: np.ndarray):
+    def attitude(self, timesteps: np.ndarray) -> np.ndarray:
         raise NotImplementedError('Must implement `attitude` method')
     
-    def angular_rate(self, timesteps: np.ndarray):
+    def angular_rate(self, timesteps: np.ndarray) -> np.ndarray:
         raise NotImplementedError('Must implement `attitude` method')

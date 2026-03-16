@@ -2,8 +2,9 @@
 from . import SensorsConfig
 from .generators import Generator
 from ..noises import NoiseFactory
-import scipy as sp
+from typing import Tuple
 import numpy as np
+import scipy as sp
 
 # Implementation
 class Sensors:
@@ -19,7 +20,7 @@ class Sensors:
         self.generator = Generator(cfg.generator_cfg)
         self.noise = NoiseFactory.create(cfg.noise_cfg)
     
-    def positions(self):
+    def positions(self) -> np.ndarray:
         # Timesteps
         dt  = 1.0 / self.cfg.frequency
         t   = np.arange(0, self.cfg.max_duration, dt)
@@ -30,7 +31,18 @@ class Sensors:
         # Return true attitude as quaternion
         return positions
     
-    def attitudes(self):
+    def velocities(self) -> np.ndarray:
+        # Timesteps
+        dt  = 1.0 / self.cfg.frequency
+        t   = np.arange(0, self.cfg.max_duration, dt)
+        
+        # Get true attitude
+        velocities = self.generator.velocity(t)
+        
+        # Return true attitude as quaternion
+        return velocities
+    
+    def attitudes(self) -> np.ndarray:
         # Timesteps
         dt  = 1.0 / self.cfg.frequency
         t   = np.arange(0, self.cfg.max_duration, dt)
@@ -42,7 +54,7 @@ class Sensors:
         return attitude.as_quat()
     
     # Obtain measurements data
-    def measurements(self):
+    def measurements(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         # Timesteps
         dt_os   = 1.0 / (self.cfg.frequency * 20.0)
         t_os    = np.arange(0, self.cfg.max_duration, dt_os)

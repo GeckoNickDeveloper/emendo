@@ -38,22 +38,22 @@ class Generator:
 
 
     # Trajectory
-    def position(self, timesteps: np.ndarray):
+    def position(self, timesteps: np.ndarray) -> np.ndarray:
         return self.__kinematic.position(timesteps)
 
-    def velocity(self, timesteps: np.ndarray):
+    def velocity(self, timesteps: np.ndarray) -> np.ndarray:
         return self.__kinematic.velocity(timesteps)
 
-    def acceleration(self, timesteps: np.ndarray):
+    def acceleration(self, timesteps: np.ndarray) -> np.ndarray:
         return self.__kinematic.acceleration(timesteps)
 
     # Attitude
-    def attitude(self, timesteps: np.ndarray):
+    def attitude(self, timesteps: np.ndarray) -> np.ndarray:
         return self.__attitude.attitude(timesteps)
     
-    def angular_rate(self, timesteps: np.ndarray):
+    def angular_rate(self, timesteps: np.ndarray) -> np.ndarray:
         return self.__attitude.angular_rate(timesteps)
 
     # Magnetic
-    def magnetic(self, positions: np.ndarray):
+    def magnetic(self, positions: np.ndarray) -> np.ndarray:
         return self.__magnetic.magnetic(positions)

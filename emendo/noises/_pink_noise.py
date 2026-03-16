@@ -10,7 +10,7 @@ class PinkNoise(Noise):
         super().__init__(cfg)
     
 
-    def generate(self, shape: Tuple[int, int], frequency: float):
+    def generate(self, shape: Tuple[int, int], frequency: float) -> np.ndarray:
         # Validation
         if shape is None:
             raise ValueError('`shape` cannot be None')
@@ -31,7 +31,7 @@ class PinkNoise(Noise):
 
         # Actual Noise implementation
         ## Create noise spectrum array
-        X = np.zeros(shape[0], dtype=complex)
+        X = np.zeros(shape[0], dtype = complex)
 
         ## Positive frequencies (excluding DC and Nyquist)
         half = shape[0] // 2

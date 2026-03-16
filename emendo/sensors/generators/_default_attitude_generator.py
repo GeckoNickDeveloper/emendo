@@ -27,7 +27,7 @@ class DefaultAttitudeGenerator(AttitudeGenerator):
 
         self.__attitude = RotationSpline(times, rotations)
     
-    def attitude(self, timesteps: np.ndarray):
+    def attitude(self, timesteps: np.ndarray) -> np.ndarray:
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
@@ -37,7 +37,7 @@ class DefaultAttitudeGenerator(AttitudeGenerator):
         
         return self.__attitude(timesteps, 0)
     
-    def angular_rate(self, timesteps: np.ndarray):
+    def angular_rate(self, timesteps: np.ndarray) -> np.ndarray:
         if timesteps is None:
             raise ValueError('`timesteps` cannot be None')
         if timesteps.ndim != 1:
