@@ -1,6 +1,11 @@
 # API
 ## Config
-from ._generator_config import GeneratorConfig, GeneratorData, GeneratorBounds, GeneratorZone
+from ._generator_config import (
+    GeneratorConfig,
+    GeneratorData,
+    GeneratorBounds,
+    GeneratorZone
+)
 ## Interfaces
 from ._kinematic_generator import KinematicGenerator
 from ._attitude_generator import AttitudeGenerator

@@ -17,8 +17,10 @@ class Sensors:
         self.cfg = cfg
         
         # Attributes
-        self.generator = Generator(cfg.generator_cfg)
-        self.noise = NoiseFactory.create(cfg.noise_cfg)
+        self.generator  = Generator(cfg.generator_cfg)
+        self.acc_noise  = NoiseFactory.create(cfg.acc_noise_cfg)
+        self.gyro_noise = NoiseFactory.create(cfg.gyro_noise_cfg)
+        self.mag_noise  = NoiseFactory.create(cfg.mag_noise_cfg)
     
     def positions(self) -> np.ndarray:
         # Timesteps
@@ -70,16 +72,16 @@ class Sensors:
         wf_gt_mag_os = self.generator.magnetic(wf_gt_pos_os)
         
         # Get noise modeling (20x oversample)
-        noise_acc   = self.noise.generate(wf_gt_pos_os.shape, self.cfg.frequency * 20.0)
-        noise_gyro  = self.noise.generate(gt_angular_rate_os.shape, self.cfg.frequency * 20.0)
-        noise_mag   = self.noise.generate(wf_gt_mag_os.shape, self.cfg.frequency * 20.0)
+        noise_acc   = self.acc_noise.generate(wf_gt_pos_os.shape, self.cfg.frequency * 20.0)
+        noise_gyro  = self.gyro_noise.generate(gt_angular_rate_os.shape, self.cfg.frequency * 20.0)
+        noise_mag   = self.mag_noise.generate(wf_gt_mag_os.shape, self.cfg.frequency * 20.0)
         
         # Rotate to body frame
         ## Acceleration
         bf_gt_acc_os = gt_att_os.apply(wf_gt_acc_os)
         ## Magnetometer
         bf_gt_mag_os = gt_att_os.apply(wf_gt_mag_os)
-        
+
         # Add noise        
         ## Accelerometer
         bf_gt_acc_os        += noise_acc
@@ -113,7 +115,7 @@ class Sensors:
                 filter[1],
                 bf_gt_mag_os,
                 axis = 0)
-        
+
         # Downsample (decimation)
         ## Accelerometer
         bf_acc = np.array(bf_gt_acc_os[::20])
@@ -125,7 +127,11 @@ class Sensors:
         # Add biases
         ## Accelerometer
         ### Add gravity
-        bf_acc[:,2] += 9.81
+        wf_gravity = np.zeros_like(bf_acc)
+        wf_gravity[:,2] += 9.81
+        bf_gravity = gt_att_os[::20].apply(wf_gravity)
+
+        bf_acc += bf_gravity
         ## Gyroscope
         bf_gyro[:] += np.deg2rad(np.array([2, 1.4, 7]))
         ## Magnetometer

@@ -29,9 +29,9 @@ In this document, all the TODOs are listed for future development and adjustemen
 - [ ] `SensorsConfig`:
     - [ ] Add deserialization from file
     - [ ] Add independent sensors noises:
-        - [ ] Add `accelerometer_noise`
-        - [ ] Add `gyroscope_noise`
-        - [ ] Add `magnetometer_noise`
+        - [x] Add `accelerometer_noise`
+        - [x] Add `gyroscope_noise`
+        - [x] Add `magnetometer_noise`
 
 
 #### generators
