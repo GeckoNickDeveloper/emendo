@@ -3,7 +3,10 @@ TODO:
     - Improve code
 '''
 # Imports
-from . import GeneratorConfig, KinematicGenerator
+from . import (
+    GeneratorConfig,
+    KinematicGenerator
+)
 import scipy as sp
 import numpy as np
 
@@ -29,20 +32,28 @@ class DefaultKinematicGenerator(KinematicGenerator):
     
     
     def __interpolate(self):
+        # bc = (
+        #     [
+        #         (1, np.zeros(3)),   # Start at 0 velocity
+        #         (2, np.zeros(3))    # Start at 0 acceleration
+        #     ], [
+        #         (1, np.zeros(3)),   # End at 0 velocity
+        #         (2, np.zeros(3))    # End at 0 acceleration
+        #     ]
+        # )
         bc = (
             [
-                (1, np.zeros(3)),   # Start at 0 velocity
                 (2, np.zeros(3))    # Start at 0 acceleration
             ], [
                 (1, np.zeros(3)),   # End at 0 velocity
-                (2, np.zeros(3))    # End at 0 acceleration
             ]
         )
         
         self.__trajectory = sp.interpolate.make_interp_spline(
             self.cfg.data.timestamps,
             self.cfg.data.positions,
-            k = 5,
+            k = 3,
+            # k = 5,
             bc_type = bc
         )
         

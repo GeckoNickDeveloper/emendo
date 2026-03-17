@@ -56,7 +56,7 @@ class Sensors:
         return attitude.as_quat()
     
     # Obtain measurements data
-    def measurements(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def measurements(self, degrees: bool = False) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         # Timesteps
         dt_os   = 1.0 / (self.cfg.frequency * 20.0)
         t_os    = np.arange(0, self.cfg.max_duration, dt_os)
@@ -94,7 +94,7 @@ class Sensors:
         if not self.cfg.aliasing:
             # Compute coefficients of the Anti-Aliasing filter
             filter = sp.signal.butter(
-                3,
+                2,
                 self.cfg.frequency / 2,
                 btype = 'lowpass',
                 fs = self.cfg.frequency * 20.0)
@@ -127,14 +127,19 @@ class Sensors:
         # Add biases
         ## Accelerometer
         ### Add gravity
-        wf_gravity = np.zeros_like(bf_acc)
-        wf_gravity[:,2] += 9.81
-        bf_gravity = gt_att_os[::20].apply(wf_gravity)
-
-        bf_acc += bf_gravity
-        ## Gyroscope
-        bf_gyro[:] += np.deg2rad(np.array([2, 1.4, 7]))
+        #wf_gravity = np.zeros_like(bf_acc)
+        #wf_gravity[:,2] += 9.81
+        #bf_gravity = gt_att_os[::20].apply(wf_gravity)
+        #bf_acc += bf_gravity
+        # ## Gyroscope
+        # bf_gyro[:] += np.deg2rad(np.array([2, 1.4, 7]))
         ## Magnetometer
         
+        # Convert to degrees if needed
+        if degrees:
+            print(f'Max {np.max(bf_gyro)} rad/s')
+            bf_gyro = np.rad2deg(bf_gyro)
+            print(f'Max {np.max(bf_gyro)} °/s')
+
         # Return synthetic sensors
         return (bf_acc, bf_gyro, bf_mag)
