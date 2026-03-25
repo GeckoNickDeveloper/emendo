@@ -46,8 +46,8 @@ class DefaultMagneticGenerator(MagneticGenerator):
             for j in range(N):
                 for k in range(N):
                     # Compute vector field value at coordinates
-                    dlon = np.rad2deg(x[i] / 6_378_000.0)
-                    dlat = np.rad2deg(y[i] / 6_378_000.0)
+                    dlon = np.rad2deg(x[i] / 6_371_000.0)
+                    dlat = np.rad2deg(y[i] / 6_371_000.0)
                     
                     # TODO implement real reading
                     t_lat = self.cfg.data.anchor[0] + dlat
