@@ -79,8 +79,10 @@ class Sensors:
         # Rotate to body frame
         ## Acceleration
         bf_gt_acc_os = gt_att_os.apply(wf_gt_acc_os)
+        # bf_gt_acc_os = np.array(wf_gt_acc_os)
         ## Magnetometer
         bf_gt_mag_os = gt_att_os.apply(wf_gt_mag_os)
+        # bf_gt_mag_os = np.array(wf_gt_mag_os)
 
         # Add noise        
         ## Accelerometer
@@ -127,12 +129,12 @@ class Sensors:
         # Add biases
         ## Accelerometer
         ### Add gravity
-        #wf_gravity = np.zeros_like(bf_acc)
-        #wf_gravity[:,2] += 9.81
-        #bf_gravity = gt_att_os[::20].apply(wf_gravity)
-        #bf_acc += bf_gravity
-        # ## Gyroscope
-        # bf_gyro[:] += np.deg2rad(np.array([2, 1.4, 7]))
+        wf_gravity = np.zeros_like(bf_acc)
+        wf_gravity[:,2] += 9.81
+        bf_gravity = gt_att_os[::20].apply(wf_gravity)
+        bf_acc += bf_gravity
+        ## Gyroscope
+        bf_gyro[:] += np.deg2rad(np.array([2, 1.4, 7]))
         ## Magnetometer
         
         # Convert to degrees if needed
